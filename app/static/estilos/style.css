@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap');
+
+body {
+    font-family: "MedievalSharp", serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+.title{
+    font-size: 150px;
+}
+.game-menu{
+    margin-top: 8rem;
+}
+.menu-item{
+    font-size: 3rem;
+}
