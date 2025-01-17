@@ -1,0 +1,18 @@
+{% extends 'modelo.html' %}
+
+{% block titulo%}
+    A Condessa - Home
+{% endblock %}
+
+{% block conteudo %}
+    <h1>A Condessa</h1>
+
+    <a href="{{url_for('home.jogo_form')}}">Jogar</a>
+    <br>
+    <a href="{{url_for('home.tutorial')}}">Tutorial</a>
+    <br>
+    <a href="{{url_for('home.historia')}}">História</a>
+    <br>
+    <a href="{{url_for('home.creditos')}}">Créditos</a>
+
+{% endblock %}
