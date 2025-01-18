@@ -1,0 +1,18 @@
+{% extends "modelo.html" %}
+
+{%block titulo%}
+A Condessa - Biblioteca
+{%endblock titulo%}
+
+{%block conteudo%}
+     <h1>Biblioteca</h1> 
+     {% for jogador in  jogadores%}
+          <p>{{jogador.jogador}}</p>
+     {% endfor %}
+     
+
+     <a href="{{url_for('home.jogo_form')}}">Adicionar Jogadores</a>
+     <br>
+     < !--A rota abaixo ainda nao foi definida, será dircionada para o jogo, não biblioteca -- >
+     <a href="{{url_for('jogo.jogo_01')}}">Iniciar Jogo</a> 
+{%endblock conteudo%}
