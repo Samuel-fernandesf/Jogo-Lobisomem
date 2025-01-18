@@ -13,14 +13,6 @@ def jogo_form():
 
 @home.route('/biblioteca', methods = ['GET', 'POST'])
 def biblioteca():
-    jogador = request.form.get('jogador')
-    dados_jogador = {
-            'jogador': jogador 
-        }
-    jogadores.append(dados_jogador)
-    print(jogador)
-    print(jogadores)
-    
     return render_template('biblioteca.html',jogadores=jogadores)
 
 @home.route('/tutorial')

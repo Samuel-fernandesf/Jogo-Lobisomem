@@ -1,15 +1,17 @@
-{% extends "modelo.html" %}
-
-{%block titulo%}
-    A Condessa - Adicionar Jogadores
-{%endblock%}
-
-{%block conteudo%}
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
     <h1>Adicionar Jogadores</h1>
-    <form action="{{url_for('home.biblioteca')}}" method="post">
-        <input type="text" name="jogador" placeholder="Jogador" required>
+    <form action="{{ url_for('home.biblioteca') }}" method="POST" id="form_player">
+        <input type="text" name="jogador" placeholder="Jogador" id="Adicionar_player" required>
         <button type="submit">Enviar</button>
     </form>
 
-{%endblock%}
+    <script src="{{ url_for('static', filename='js/teste.js') }}"></script>
+</body>
+</html>
