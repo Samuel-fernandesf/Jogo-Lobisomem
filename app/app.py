@@ -6,5 +6,4 @@ app = Flask(__name__)
 #Liga os arquivos de routes ao programa principal, colocando um prefixo na url
 app.register_blueprint(home, url_prefix='/')
 
-#teste
 
