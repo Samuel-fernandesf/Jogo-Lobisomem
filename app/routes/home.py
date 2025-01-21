@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, redirect, url_for, request
+from database.dados import jogador
 
 home = Blueprint('home', __name__)
 
@@ -8,7 +9,7 @@ def homepage():
 
 @home.route('/biblioteca')
 def biblioteca():
-    return render_template('biblioteca.html')
+    return render_template('biblioteca.html', jogadores = jogador)
 
 @home.route('/tutorial')
 def tutorial():

@@ -12,6 +12,6 @@ def adicionar_form():
     data = request.get_json()
     
     with open('database/dados.py', 'w') as f:
-        f.write(f"jogador: {data['aux_bd']}\n")
+        f.write(f"jogador = {data['aux_bd']}\n")
         
     return redirect('/biblioteca')
