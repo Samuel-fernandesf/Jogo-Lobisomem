@@ -1,5 +1,4 @@
 from flask import Blueprint, render_template, redirect, url_for, request
-from database.dados import jogadores
 
 home = Blueprint('home', __name__)
 
@@ -7,21 +6,9 @@ home = Blueprint('home', __name__)
 def homepage():
     return render_template('index.html')
 
-@home.route('/jogo_form', methods = ['GET', 'POST'])
-def jogo_form():
-    return render_template('jogo_form.html')
-
-@home.route('/biblioteca', methods = ['GET', 'POST'])
+@home.route('/biblioteca')
 def biblioteca():
-    jogador = request.form.get('jogador')
-    dados_jogador = {
-            'jogador': jogador 
-        }
-    jogadores.append(dados_jogador)
-    print(jogador)
-    print(jogadores)
-    
-    return render_template('biblioteca.html',jogadores=jogadores)
+    return render_template('biblioteca.html')
 
 @home.route('/tutorial')
 def tutorial():
