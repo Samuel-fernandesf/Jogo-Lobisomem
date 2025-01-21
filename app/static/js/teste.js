@@ -20,6 +20,12 @@ document.getElementById('form_player').addEventListener('submit', function(event
 
     console.log(player_form);
     console.log(aux_bd);
+    
+    fetch('/form/adicionar_form', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ aux_bd: aux_bd })
+    })
 });
-
-fetch('')
