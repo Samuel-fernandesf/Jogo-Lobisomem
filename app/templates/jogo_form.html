@@ -1,17 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+{% extends "modelo.html" %}
+
+{% block conteudo %}
     <h1>Adicionar Jogadores</h1>
-    <form action="{{ url_for('home.biblioteca') }}" method="POST" id="form_player">
-        <input type="text" name="jogador" placeholder="Jogador" id="Adicionar_player" required>
+    <form action="{{ url_for('form.adicionar_form') }}" method="POST" id="form_player">
+        <input type="text" name="jogador" placeholder="Jogador" id="jogador" required>
         <button type="submit">Enviar</button>
+        <a href="{{url_for('home.biblioteca')}}">Ir para biblioteca</a>
     </form>
 
-    <script src="{{ url_for('static', filename='js/teste.js') }}"></script>
-</body>
-</html>
+    <!-- <script src="{{ url_for('static', filename='js/teste.js') }}"></script> -->
+
+{% endblock conteudo %}
+

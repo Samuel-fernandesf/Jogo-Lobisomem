@@ -7,6 +7,6 @@ jogo = Blueprint('jogo', __name__)
 def resumo_rodada():
     return render_template('resumo.html')
 
-@jogo.route('/acao/<id:int>', methods=['GET', 'POST'])
+@jogo.route('/acao/<int:id>', methods=['GET', 'POST'])
 def acao():
-    return render_template('acao.html')
+    return render_template('acao.html') 

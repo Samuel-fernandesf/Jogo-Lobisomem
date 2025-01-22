@@ -6,13 +6,13 @@ A Condessa - Biblioteca
 
 {%block conteudo%}
      <h1>Biblioteca</h1> 
-     {% for jogador in  jogadores%}
-          <p>{{jogador.player}}</p>
+     {% for jogador in jogadores%}
+          <p>{{jogador.nome}}</p>
      {% endfor %}
      
 
      <a href="{{url_for('form.jogo_form')}}">Adicionar Jogadores</a>
      <br>
      < !--A rota abaixo ainda nao foi definida, será dircionada para o jogo, não biblioteca -- >
-     <a href="{{url_for('jogo.jogo_01')}}">Iniciar Jogo</a> 
+     <a href="{{url_for('jogo.resumo_rodada')}}">Iniciar Jogo</a> 
 {%endblock conteudo%}
