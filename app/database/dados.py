@@ -1,1 +1,1 @@
-jogador: [{'ID': 1, 'player': 'fdhhddhf'}]
+jogador = [{'ID': 1, 'player': 'srtyu'}]
