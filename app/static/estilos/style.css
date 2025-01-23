@@ -15,3 +15,41 @@ body {
 .menu-item{
     font-size: 3rem;
 }
+.p_d {
+    font-size: 4rem;
+    margin-top: 2rem;
+}
+.p_c{
+    font-size: 8rem;
+    margin-top: 6rem;
+}
+.p_c_t {
+    margin-top: 1rem;
+    font-size: 8rem;
+}
+.p_s{
+    font-size: 3rem;
+    text-decoration: none;
+}
+.p {
+    font-size: 2rem;
+    margin-top: -1.5rem;   
+}
+.p_t{
+    font-size: 2rem;
+    margin-left: 30%;
+    margin-right: 30%;
+}
+.sp {
+    margin-top: 2rem;
+}
+.sp_g {
+    margin-top: 4rem;
+}
+.ftf{
+    margin-bottom: 6rem;
+}
+.ftf_t{
+    margin-bottom: 6rem;
+    overflow-y:hidden;
+}
