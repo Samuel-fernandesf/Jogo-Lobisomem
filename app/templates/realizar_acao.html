@@ -1,0 +1,14 @@
+{% extends "modelo.html" %}
+
+
+
+{% block conteudo %}
+    <h1>Vez de {{ jogador }}</h1>
+    <p>Você é um {{ papel }}</p>
+    <form method="POST">
+        <label for="acao">Descreva sua ação:</label><br>
+        <input type="text" id="acao" name="acao" required><br><br>
+        <button type="submit">Enviar Ação</button>
+    </form>
+{% endblock conteudo %}
+    

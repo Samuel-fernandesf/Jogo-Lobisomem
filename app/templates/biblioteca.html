@@ -6,13 +6,18 @@ A Condessa - Biblioteca
 
 {%block conteudo%}
      <h1>Biblioteca</h1> 
-     {% for jogador in jogadores%}
-          <p>{{jogador.nome}}</p>
-     {% endfor %}
+     <h2>Jogadores adicionados:</h2>
+     <ul>
+          {% for jogador in session.get('jogadores', []) %}
+               <li>{{ jogador }}</li>
+          {% endfor %}
+     </ul>
      
-
      <a href="{{url_for('form.jogo_form')}}">Adicionar Jogadores</a>
      <br>
-     < !--A rota abaixo ainda nao foi definida, será dircionada para o jogo, não biblioteca -- >
-     <a href="{{url_for('jogo.resumo_rodada')}}">Iniciar Jogo</a> 
+     {% if session.get('jogadores') %}
+          <form method="POST" action="{{url_for('jogo.iniciar_jogo')}}">
+               <button type="submit">Iniciar Jogo</button>
+          </form>
+     {% endif %}
 {%endblock conteudo%}

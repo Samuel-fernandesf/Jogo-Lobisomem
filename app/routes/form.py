@@ -1,6 +1,7 @@
-from flask import Blueprint, render_template, redirect, url_for, request
+from flask import Blueprint, render_template, redirect, url_for, request, session
 from database.dados import jogadores
-id = 0
+import random
+
 form = Blueprint('form', __name__)
 
 @form.route('/', methods = ['GET', 'POST'])
@@ -10,21 +11,11 @@ def jogo_form():
 @form.route('/adicionar_form', methods = ['GET', 'POST'])
 def adicionar_form():
 
-    nome = request.form.get('jogador')
-    
-    jogador = {
-        'id': len(jogadores) + 1,
-        "nome": nome
-    }
-    
-    jogadores.append(jogador)
-    print(jogadores)
-    
-    
-    
-    # data = request.get_json()
-    
-    # with open('database/dados.py', 'w') as f:
-    #     f.write(f"jogador = {data['aux_bd']}\n")
-        
-    return redirect('/biblioteca')
+    if request.method == 'POST':
+        nome = request.form.get('nome')
+        if 'jogadores' not in session:
+            session['jogadores'] = []
+        session['jogadores'].append(nome)
+        session.modified = True
+        return redirect(url_for('home.biblioteca'))
+    return render_template('jogo_form.html')

@@ -7,5 +7,24 @@
 
 
 {% block conteudo %}
-    
+    <h1>Registrar Ações dos Jogadores</h1>
+    <form method="POST" action="/acao">
+        <label for="jogador">Jogador:</label>
+        <select name="jogador" id="jogador" required>
+            {% for jogador in session.get('jogadores', []) %}
+                <option value="{{ jogador }}">{{ jogador }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="acao">Ação:</label>
+        <input type="text" name="acao" placeholder="Digite a ação" required>
+        <button type="submit">Registrar</button>
+    </form>
+
+    <h2>Ações Registradas:</h2>
+    <ul>
+        {% for acao in session.get('acoes', []) %}
+            <li>{{ acao.jogador }} realizou: {{ acao.acao }}</li>
+        {% endfor %}
+    </ul>
 {% endblock conteudo %}

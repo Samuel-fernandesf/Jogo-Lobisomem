@@ -1,14 +1,10 @@
 {% extends "modelo.html" %}
 
 {% block conteudo %}
-    <h1>Adicionar Jogadores</h1>
-    <form action="{{ url_for('form.adicionar_form') }}" method="POST" id="form_player">
-        <input type="text" name="jogador" placeholder="Jogador" id="jogador" required>
-        <button type="submit">Enviar</button>
-        <a href="{{url_for('home.biblioteca')}}">Ir para biblioteca</a>
+    <h1>Biblioteca</h1>
+    <form method="POST" action="{{url_for('form.adicionar_form')}}">
+        <input type="text" name="nome" placeholder="Nome do jogador" required>
+        <button type="submit">Adicionar</button>
     </form>
-
-    <!-- <script src="{{ url_for('static', filename='js/teste.js') }}"></script> -->
-
 {% endblock conteudo %}
 
