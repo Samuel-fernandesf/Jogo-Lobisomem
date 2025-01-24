@@ -3,12 +3,22 @@
 
 
 {% block conteudo %}
-    <h1>Vez de {{ jogador }}</h1>
-    <p>Você é um {{ papel }}</p>
-    <form method="POST">
-        <label for="acao">Descreva sua ação:</label><br>
-        <input type="text" id="acao" name="acao" required><br><br>
-        <button type="submit">Enviar Ação</button>
-    </form>
+    <h1>Vez de {{ jogador }} ({{ papel }})</h1>
+        
+    {% if jogadores_vivos %}
+        <form action="{{ url_for('jogo.realizar_acao') }}" method="POST">
+            <label for="alvo">Escolha um alvo:</label>
+            <select name="alvo" required>
+                {% for j in jogadores_vivos %}
+                    {% if j != jogador %}
+                        <option value="{{ j }}">{{ j }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+            <button type="submit">Executar Ação</button>
+        </form>
+    {% else %}
+        <p>Não há alvos disponíveis.</p>
+    {% endif %}
 {% endblock conteudo %}
     

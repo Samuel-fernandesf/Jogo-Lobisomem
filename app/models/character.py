@@ -1,121 +1,148 @@
-class Player():
+class Player:
+    def __init__(self, nome, papel):
+        self.nome = nome
+        self.papel = papel
+        self.vivo = True
+
+    def realizar_acao(self, alvo=None):
+        return f"{self.nome} ({self.papel}) não pode realizar ações."
+
+    def morrer(self):
+        self.vivo = False
+        return f"{self.nome} foi eliminado!"
+
+    def to_dict(self):
+        """Transforma o objeto Player em um dicionário JSON serializável"""
+        return {"nome": self.nome, "papel": self.papel, "vivo": self.vivo}
+
+    @staticmethod
+    def from_dict(data):
+        """Cria um objeto Player a partir de um dicionário"""
+        obj = Player(data["nome"], data["papel"])
+        obj.vivo = data["vivo"]
+        return obj
+
+class Assassino(Player):
+    def __init__(self, nome):
+        super().__init__(nome, "Vampiro")
+
+    def realizar_acao(self, alvo):
+        if not self.vivo:
+            return f"{self.nome} está morto e não pode atacar."
+        if not alvo.vivo:
+            return f"{alvo.nome} já está morto."
+        
+        alvo.morrer()
+        return f"{self.nome} matou {alvo.nome}!"
+
+    def to_dict(self):
+        data = super().to_dict()
+        data["tipo"] = "Assassino"
+        return data
+
+    @staticmethod
+    def from_dict(data):
+        obj = Assassino(data["nome"])
+        obj.vivo = data["vivo"]
+        return obj
+
+class Bruxa(Player):
+    def __init__(self, nome):
+        super().__init__(nome, "Bruxa")
+
+    def realizar_acao(self, alvo):
+        if not self.vivo:
+            return f"{self.nome} está morta e não pode usar a magia."
+        if not alvo.vivo:
+            return f"{alvo.nome} já está morto."
+        
+        # A bruxa pode salvar um jogador (ou outra ação)
+        alvo.vivo = True  # Exemplo de ação
+        return f"{self.nome} salvou {alvo.nome}!"
+
+    def to_dict(self):
+        data = super().to_dict()
+        data["tipo"] = "Bruxa"
+        return data
+
+    @staticmethod
+    def from_dict(data):
+        obj = Bruxa(data["nome"])
+        obj.vivo = data["vivo"]
+        return obj
+
+
+class GuardaCosta(Player):
+    def __init__(self, nome):
+        super().__init__(nome, "Guarda-Costa")
+
+    def realizar_acao(self, alvo):
+        if not self.vivo:
+            return f"{self.nome} está morto e não pode proteger ninguém."
+        if not alvo.vivo:
+            return f"{alvo.nome} já está morto."
+        
+        # O Guarda-Costa pode proteger um jogador (ou outra ação)
+        alvo.vivo = True  # Exemplo de ação
+        return f"{self.nome} protegeu {alvo.nome}!"
+
+    def to_dict(self):
+        data = super().to_dict()
+        data["tipo"] = "Guarda-Costa"
+        return data
+
+    @staticmethod
+    def from_dict(data):
+        obj = GuardaCosta(data["nome"])
+        obj.vivo = data["vivo"]
+        return obj
+
+
+class Acougueiro(Player):
+    def __init__(self, nome):
+        super().__init__(nome, "Açougueiro")
+
+    def realizar_acao(self, alvo):
+        if not self.vivo:
+            return f"{self.nome} está morto e não pode atacar."
+        if not alvo.vivo:
+            return f"{alvo.nome} já está morto."
+        
+        alvo.morrer()  # Exemplo de matar alguém
+        return f"{self.nome} matou {alvo.nome}!"
+
+    def to_dict(self):
+        data = super().to_dict()
+        data["tipo"] = "Açougueiro"
+        return data
+
+    @staticmethod
+    def from_dict(data):
+        obj = Acougueiro(data["nome"])
+        obj.vivo = data["vivo"]
+        return obj
     
-    def __init__(
-        self, life = True, 
-        btn_Matar = False, rounds = 0
-                ):
+class Cacador(Player):
+    def __init__(self, nome):
+        super().__init__(nome, "Caçador")
+
+    def realizar_acao(self, alvo):
+        if not self.vivo:
+            return f"{self.nome} está morto e não pode caçar."
+        if not alvo.vivo:
+            return f"{alvo.nome} já está morto."
         
-        self.life = life
-        self.btn_Matar = btn_Matar
-        self.rounds = rounds
-        
-    def vampiro(self, vampiro_kill):
-        self.life
-        self.vampiro_kill = 0
-        
-        if "matou":
-            self.vampiro_kill += 1
-        
-    def condessa(self, button_transform, condessa_kill):
-        self.life
-        self.btn_Matar = True
-        self.condessa_kill = 0
-        
-        if self.rounds in [0,2,4,6,8,10,12]:
-            self.button_transform = True
-            
-        if "matou":
-            self.condessa_kill += 1
-        
-    def campones(self):
-        self.life
-        self.btn_Matar
-        
-    def cacador(self):
-        self.life
-        self.btn_Matar = True
-        self.cacador_kill = 0
-        
-        if self.rounds in [0,2,4,6,8,10]:
-            self.btn_Matar = True
-                
-    def acougueiro(self, cheiroSangue):
-        self.life
-        self.btn_Matar
-        self.cheiroSangue = True
-        if cheiroSangue and self.vampiro_kill > 0 or self.condessa_kill > 0 or self.cacador_kill > 0:
-            return "Esse jogador cheira a sangue"
-        
-# class Player:
-#     def __init__(self, name, role, life=True):
-#         self.name = name
-#         self.role = role  # Ex: Vampiro, Condessa, Caçador, etc.
-#         self.life = life
-#         self.kills = 0
+        # O Caçador pode caçar alguém (ou outra ação)
+        alvo.morrer()
+        return f"{self.nome} caçou e matou {alvo.nome}!"
 
-#     def kill(self, target):
-#         if self.life:
-#             target.life = False
-#             self.kills += 1
-#             print(f"{self.name} matou {target.name}")
+    def to_dict(self):
+        data = super().to_dict()
+        data["tipo"] = "Caçador"
+        return data
 
-#     def __str__(self):
-#         return f"{self.name} ({self.role}) - {'Vivo' if self.life else 'Morto'}"
-
-# class Vampiro(Player):
-#     def __init__(self, name):
-#         super().__init__(name, "Vampiro")
-
-#     def action(self, target):
-#         if self.life:
-#             self.kill(target)
-
-# class Condessa(Player):
-#     def __init__(self, name):
-#         super().__init__(name, "Condessa")
-#         self.transform_button = False
-
-#     def action(self):
-#         if self.life:
-#             self.transform_button = True
-#             print(f"{self.name} se transformou em vampira")
-
-# class Cacador(Player):
-#     def __init__(self, name):
-#         super().__init__(name, "Caçador")
-
-#     def action(self, target):
-#         if self.life:
-#             self.kill(target)
-#             print(f"{self.name} caçou {target.name}")
-
-# class Acougueiro(Player):
-#     def __init__(self, name):
-#         super().__init__(name, "Acougueiro")
-#         self.cheiro_sangue = False
-
-#     def action(self):
-#         if self.life:
-#             self.cheiro_sangue = True
-#             print(f"{self.name} sente o cheiro de sangue")
-#             if self.kills > 0:
-#                 print(f"{self.name} cheira a sangue!")
-
-# # Exemplo de uso:
-# player1 = Vampiro("Vampiro1")
-# player2 = Condessa("Condessa1")
-# player3 = Cacador("Cacador1")
-# player4 = Acougueiro("Acougueiro1")
-
-# # Jogadores realizam ações:
-# player1.action(player2)  # Vampiro mata Condessa
-# player3.action(player4)  # Caçador mata Acougueiro
-
-# # Verificando estado dos jogadores:
-# print(player1)
-# print(player2)
-# print(player3)
-# print(player4)
-
-# # O Acougueiro sente 
-            
+    @staticmethod
+    def from_dict(data):
+        obj = Cacador(data["nome"])
+        obj.vivo = data["vivo"]
+        return obj

@@ -1,21 +1,34 @@
 from flask import Blueprint, render_template, redirect, url_for, request, session
-from models.character import Player
+from models.character import Player, Assassino, Bruxa, GuardaCosta
 import random
-
 
 jogo = Blueprint('jogo', __name__)
 
-@jogo.route('/iniciar', methods=['POST'])
+@jogo.route('/iniciar', methods=['POST','GET'   ])
 def iniciar_jogo():
     if 'jogadores' in session:
-        papeis = ['Condessa', 'Vampiro', 'Campones', 'Açougueiro', 'Bruxa', 'Caçador', 'Guarda-Costa']  
+        papeis = ['Condessa', 'Vampiro', 'Campones', 'Açougueiro', 'Bruxa', 'Caçador', 'Guarda-Costa']
         random.shuffle(papeis)
         session['papeis_jogadores'] = {}
-        
+        session['players_objetos'] = {}
+
         for i, jogador in enumerate(session['jogadores']):
-            session['papeis_jogadores'][jogador] = papeis[i % len(papeis)]  
+            papel = papeis[i % len(papeis)]
+            session['papeis_jogadores'][jogador] = papel  
+
+            if papel == "Vampiro":
+                player_obj = Assassino(jogador)
+            elif papel == "Bruxa":
+                player_obj = Bruxa(jogador)
+            elif papel == "Guarda-Costa":
+                player_obj = GuardaCosta(jogador)
+            else:
+                player_obj = Player(jogador, papel)
+
+            session['players_objetos'][jogador] = player_obj.to_dict()  # Agora serializável
+
         session.modified = True
-        return redirect(url_for('jogo.mostrar_selecao'))  
+        return redirect(url_for('jogo.mostrar_selecao'))
 
     return redirect(url_for('home'))
 
@@ -71,22 +84,69 @@ def realizar_acao():
     jogador_atual_idx = session['jogador_atual']
 
     if jogador_atual_idx >= len(fila_acoes):
-        return redirect(url_for('jogo.finalizar_fase'))
+        return redirect(url_for('jogo.resumo_rodada'))
 
-    jogador_atual = fila_acoes[jogador_atual_idx]
+    jogador_atual = fila_acoes[jogador_atual_idx]  # Corrigido para pegar o jogador atual do índice
     papel = session['papeis_jogadores'][jogador_atual]
 
     if request.method == 'POST':
+        alvo_nome = request.form.get('alvo')
 
-        acao = request.form.get('acao')
-        if acao:
-            session['acoes'].append({'jogador': jogador_atual, 'papel': papel, 'acao': acao})
-            session['jogador_atual'] += 1  
+        if alvo_nome and alvo_nome in session['players_objetos']:
+            jogador_data = session['players_objetos'][jogador_atual]
+            alvo_data = session['players_objetos'][alvo_nome]
+
+            # Convertendo os dicionários de volta para objetos
+            if jogador_data["papel"] == "Vampiro":
+                jogador_obj = Assassino.from_dict(jogador_data)
+            elif jogador_data["papel"] == "Bruxa":
+                jogador_obj = Bruxa.from_dict(jogador_data)
+            elif jogador_data["papel"] == "Guarda-Costa":
+                jogador_obj = GuardaCosta.from_dict(jogador_data)
+            else:
+                jogador_obj = Player.from_dict(jogador_data)
+
+            if alvo_data["papel"] == "Vampiro":
+                alvo_obj = Assassino.from_dict(alvo_data)
+            elif alvo_data["papel"] == "Bruxa":
+                alvo_obj = Bruxa.from_dict(alvo_data)
+            elif alvo_data["papel"] == "Guarda-Costa":
+                alvo_obj = GuardaCosta.from_dict(alvo_data)
+            else:
+                alvo_obj = Player.from_dict(alvo_data)
+
+            # Executa a ação
+            resultado = jogador_obj.realizar_acao(alvo_obj)
+
+            # Atualiza os estados na sessão
+            session['players_objetos'][jogador_atual] = jogador_obj.to_dict()
+            session['players_objetos'][alvo_nome] = alvo_obj.to_dict()
+            session['acoes'].append({'jogador': jogador_atual, 'acao': resultado})
+            session['jogador_atual'] += 1
             session.modified = True
+
             return redirect(url_for('jogo.realizar_acao'))
 
-    return render_template('realizar_acao.html', jogador=jogador_atual, papel=papel)
+    jogadores_vivos = [j for j in session['players_objetos'] if session['players_objetos'][j]["vivo"]]
+    
+    return render_template('realizar_acao.html', jogador=jogador_atual, papel=papel, jogadores_vivos=jogadores_vivos)
 
 
+@jogo.route('/resumo_rodada')
+def resumo_rodada():
+    if 'acoes' not in session or 'players_objetos' not in session:
+        return redirect(url_for('home'))
 
+    mortes = 0
+    vivos = 0
+    acoes = session['acoes']
+    jogadores_objetos = session['players_objetos']
 
+    # Verifica quantos jogadores morreram
+    for jogador in jogadores_objetos:
+        if not jogadores_objetos[jogador]['vivo']:
+            mortes += 1
+        else:
+            vivos += 1
+
+    return render_template('resumo_rodadas.html', mortes=mortes, vivos=vivos, acoes=acoes)
