@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, redirect, url_for, request, session
+from models.character import Player
 import random
 
 
@@ -7,7 +8,7 @@ jogo = Blueprint('jogo', __name__)
 @jogo.route('/iniciar', methods=['POST'])
 def iniciar_jogo():
     if 'jogadores' in session:
-        papeis = ['Condessa', 'Vampiro', 'Campones', 'Açougueiro', 'Bruxa', 'Caçador', 'Guarda Costa']  
+        papeis = ['Condessa', 'Vampiro', 'Campones', 'Açougueiro', 'Bruxa', 'Caçador', 'Guarda-Costa']  
         random.shuffle(papeis)
         session['papeis_jogadores'] = {}
         
@@ -26,6 +27,8 @@ def ver_papel(nome):
         return render_template('ver_papel.html', nome=nome, papel=papel)
     return redirect(url_for('home'))
 
+
+#Deverá ser explicado a equipe
 @jogo.route('/papeis')
 def mostrar_selecao():
     if 'jogadores' in session:
@@ -48,7 +51,7 @@ def iniciar_acoes():
     if 'papeis_jogadores' in session:
         jogadores_com_acao = [
             jogador for jogador, papel in session['papeis_jogadores'].items()
-            if papel in ['Condessa', 'Vampiro', 'Açougueiro', 'Bruxa', 'Caçador', 'Guarda Costa'] 
+            if papel in ['Condessa', 'Vampiro', 'Açougueiro', 'Bruxa', 'Caçador', 'Guarda-Costa'] 
         ]
 
         session['jogador_atual'] = 0  
