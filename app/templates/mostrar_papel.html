@@ -4,10 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='estilos/style.css') }}">
-    <title>História</title>
+    <title>Seu Papel</title>
 </head>
 <body>
-    <h1>História do Jogo</h1>
-    <p>Descubra o enredo por trás do jogo.</p>
+    <h1>{{ jogador }}, seu papel é:</h1>
+    <h2>{{ papel }}</h2>
+    <form method="POST">
+        <button type="submit">Próximo</button>
+    </form>
+
 </body>
 </html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='estilos/style.css') }}">
+    <title>Resultado da Votação</title>
+</head>
+<body>
+    <h1>Resultado da Votação</h1>
+    <h2>{{ eliminado }} foi eliminado!</h2>
+    <p>O papel de {{ eliminado }} era: {{ papel }}</p>
+
+    <h3>Jogadores Vivos:</h3>
+    <ul>
+        {% for jogador in vivos %}
+            <li>{{ jogador }}</li>
+        {% endfor %}
+    </ul>
+
+    <form method="POST" action="{{ url_for('jogo.realizar_acao') }}">
+        <button type="submit">Iniciar Próxima Fase</button>
+    </form>
+</body>
+</html>

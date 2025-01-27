@@ -1,21 +1,18 @@
-{% extends 'modelo.html' %}
-
-{% block titulo%}
-    A Condessa - Home
-{% endblock %}
-
-{% block conteudo %}
-    <div class="container text-center">
-
-        <h1 class="title mt-5">A Condessa</h1>
-
-        <div class="d-flex flex-column game-menu">
-            <a class="text-decoration-none menu-item" href="{{url_for('form.jogo_form')}}">Jogar</a>
-            <a class="text-decoration-none menu-item" href="{{url_for('home.tutorial')}}">Tutorial</a>
-            <a class="text-decoration-none menu-item" href="{{url_for('home.historia')}}">História</a>
-            <a class="text-decoration-none menu-item" href="{{url_for('home.creditos')}}">Créditos</a>
-        </div>
-
-    </div>
-
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='estilos/style.css') }}">
+    <title>Home</title>
+</head>
+<body>
+    <h1>A Condessa</h1>
+    <nav>
+        <a href="{{ url_for('form.jogo_form') }}">Iniciar Jogo</a>
+        <a href="{{ url_for('home.tutorial') }}">Tutorial</a>
+        <a href="{{ url_for('home.historia') }}">História</a>
+        <a href="{{ url_for('home.creditos') }}">Créditos</a>
+    </nav>
+</body>
+</html>

@@ -1,64 +1,17 @@
-{% extends "modelo.html" %}
-
-
-
-{% block conteudo %}
-    <h1>Selecione seu nome para ver seu papel</h1>
-    <ul id="lista-jogadores">
-        {% for jogador in jogadores %}
-            <li>
-                <button onclick="mostrarPapel('{{ jogador }}')" id="botao-{{ jogador }}">{{ jogador }}</button>
-            </li>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='estilos/style.css') }}">
+    <title>Seleção de Papéis</title>
+</head>
+<body>
+    <h1>Seleção de Papéis</h1>
+    <ul>
+        {% for jogador, papel in papeis.items() %}
+            <li>{{ jogador }}: {{ papel }}</li>
         {% endfor %}
     </ul>
-
-    <div id="papel-container" class="papel">
-        <h2 id="nome-jogador"></h2>
-        <p>Seu papel: <span id="papel-jogador"></span></p>
-        <button onclick="ocultarPapel()">Esconder Papel</button>
-    </div>
-
-    <button id="botao-iniciar" onclick="iniciarJogo()">Iniciar Jogo</button>
-
-    <script>
-        const papeis = {{ papeis | tojson | safe }};
-
-        function mostrarPapel(jogador) {
-            // Atualiza a interface para mostrar o papel do jogador
-            document.getElementById('papel-container').style.display = 'block';
-            document.getElementById('nome-jogador').innerText = jogador;
-            document.getElementById('papel-jogador').innerText = papeis[jogador];
-
-            // Remove o botão do jogador para evitar repetição
-            const botao = document.getElementById(`botao-${jogador}`);
-            botao.disabled = true;
-            botao.innerText = "Já visualizado";
-            botao.classList.add('jogador-selecionado');
-
-            // Verifica se todos os jogadores visualizaram seus papéis
-            verificarTodosVisualizados();
-        }
-
-        function ocultarPapel() {
-            // Oculta o papel atualmente visível
-            document.getElementById('papel-container').style.display = 'none';
-        }
-
-        function verificarTodosVisualizados() {
-            // Verifica se todos os botões estão desativados
-            const botoes = document.querySelectorAll('#lista-jogadores button');
-            const todosVisualizados = Array.from(botoes).every(botao => botao.disabled);
-
-            // Exibe o botão "Iniciar Jogo" se todos tiverem visto seus papéis
-            if (todosVisualizados) {
-                document.getElementById('botao-iniciar').style.display = 'block';
-            }
-        }
-
-        function iniciarJogo() {
-            alert("Jogo iniciado!");
-            window.location.href = "{{url_for('jogo.iniciar_acoes')}}"; 
-        }
-    </script>
-{% endblock conteudo %}
-    
+</body>
+</html>

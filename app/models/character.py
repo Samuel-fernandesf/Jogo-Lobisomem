@@ -1,121 +1,113 @@
-class Player():
-    
-    def __init__(
-        self, life = True, 
-        btn_Matar = False, rounds = 0
-                ):
-        
-        self.life = life
-        self.btn_Matar = btn_Matar
-        self.rounds = rounds
-        
-    def vampiro(self, vampiro_kill):
-        self.life
-        self.vampiro_kill = 0
-        
-        if "matou":
-            self.vampiro_kill += 1
-        
-    def condessa(self, button_transform, condessa_kill):
-        self.life
-        self.btn_Matar = True
-        self.condessa_kill = 0
-        
-        if self.rounds in [0,2,4,6,8,10,12]:
-            self.button_transform = True
-            
-        if "matou":
-            self.condessa_kill += 1
-        
-    def campones(self):
-        self.life
-        self.btn_Matar
-        
-    def cacador(self):
-        self.life
-        self.btn_Matar = True
-        self.cacador_kill = 0
-        
-        if self.rounds in [0,2,4,6,8,10]:
-            self.btn_Matar = True
-                
-    def acougueiro(self, cheiroSangue):
-        self.life
-        self.btn_Matar
-        self.cheiroSangue = True
-        if cheiroSangue and self.vampiro_kill > 0 or self.condessa_kill > 0 or self.cacador_kill > 0:
-            return "Esse jogador cheira a sangue"
-        
-# class Player:
-#     def __init__(self, name, role, life=True):
-#         self.name = name
-#         self.role = role  # Ex: Vampiro, Condessa, Caçador, etc.
-#         self.life = life
-#         self.kills = 0
+class Player:
+    def __init__(self, life=True, rounds=0):
+        self.life = life  # Status de vida do jogador
+        self.rounds = rounds  # Número de rodadas do jogador
 
-#     def kill(self, target):
-#         if self.life:
-#             target.life = False
-#             self.kills += 1
-#             print(f"{self.name} matou {target.name}")
+    def vote(self):
+        """Função genérica para votar, pode ser sobrescrita."""
+        pass
 
-#     def __str__(self):
-#         return f"{self.name} ({self.role}) - {'Vivo' if self.life else 'Morto'}"
 
-# class Vampiro(Player):
-#     def __init__(self, name):
-#         super().__init__(name, "Vampiro")
+class Campones(Player):
+    def __init__(self, life=True, rounds=0):
+        super().__init__(life, rounds)
+        self.has_voted = False  # Controle se o camponês já votou no dia 2
 
-#     def action(self, target):
-#         if self.life:
-#             self.kill(target)
+    def skip_round(self):
+        """Camponês apenas pula a rodada."""
+        print("Camponês pulou a rodada.")
 
-# class Condessa(Player):
-#     def __init__(self, name):
-#         super().__init__(name, "Condessa")
-#         self.transform_button = False
+    def vote(self):
+        if self.rounds >= 2 and not self.has_voted:
+            self.has_voted = True
+            print("Camponês votou.")
+        else:
+            print("Camponês não pode votar agora.")
 
-#     def action(self):
-#         if self.life:
-#             self.transform_button = True
-#             print(f"{self.name} se transformou em vampira")
 
-# class Cacador(Player):
-#     def __init__(self, name):
-#         super().__init__(name, "Caçador")
+class Vampiro(Player):
+    def __init__(self, life=True, rounds=0):
+        super().__init__(life, rounds)
+        self.vampiro_kill_count = 0  # Contador de mortes realizadas pelo vampiro
 
-#     def action(self, target):
-#         if self.life:
-#             self.kill(target)
-#             print(f"{self.name} caçou {target.name}")
+    def kill(self, target):
+        """Vampiro mata um jogador durante a noite."""
+        if self.rounds < 3:
+            target.life = False
+            self.vampiro_kill_count += 1
+            print(f"Vampiro matou o jogador {target}.")
+        else:
+            print("Vampiro não pode matar após a rodada 3.")
 
-# class Acougueiro(Player):
-#     def __init__(self, name):
-#         super().__init__(name, "Acougueiro")
-#         self.cheiro_sangue = False
+    def vote(self):
+        if self.rounds >= 3:
+            print("Vampiro votou.")
+        else:
+            print("Vampiro não pode votar antes da rodada 3.")
 
-#     def action(self):
-#         if self.life:
-#             self.cheiro_sangue = True
-#             print(f"{self.name} sente o cheiro de sangue")
-#             if self.kills > 0:
-#                 print(f"{self.name} cheira a sangue!")
 
-# # Exemplo de uso:
-# player1 = Vampiro("Vampiro1")
-# player2 = Condessa("Condessa1")
-# player3 = Cacador("Cacador1")
-# player4 = Acougueiro("Acougueiro1")
+class Condessa(Player):
+    def __init__(self, life=True, rounds=0):
+        super().__init__(life, rounds)
+        self.condessa_kill_count = 0  # Contador de mortes realizadas pela condessa
 
-# # Jogadores realizam ações:
-# player1.action(player2)  # Vampiro mata Condessa
-# player3.action(player4)  # Caçador mata Acougueiro
+    def kill(self, target):
+        """Condessa mata um jogador, mas não pode matar vampiros."""
+        if not isinstance(target, Vampiro):
+            target.life = False
+            self.condessa_kill_count += 1
+            print(f"Condessa matou o jogador {target}.")
+        else:
+            print("Condessa não pode matar vampiros.")
 
-# # Verificando estado dos jogadores:
-# print(player1)
-# print(player2)
-# print(player3)
-# print(player4)
+    def transform(self, target):
+        """Condessa transforma um jogador em vampiro a cada duas rodadas."""
+        if self.rounds % 2 == 0:
+            if not isinstance(target, Vampiro):
+                target.__class__ = Vampiro
+                print(f"Condessa transformou o jogador {target} em vampiro.")
+            else:
+                print("Jogador já é um vampiro, não pode ser transformado.")
+        else:
+            print("Condessa não pode transformar nesta rodada.")
 
-# # O Acougueiro sente 
-            
+    def vote(self):
+        """Condessa vota normalmente."""
+        print("Condessa votou.")
+
+
+class Cacador(Player):
+    def __init__(self, life=True, rounds=0):
+        super().__init__(life, rounds)
+
+    def kill(self, target):
+        """Caçador pode matar qualquer jogador a cada duas rodadas."""
+        if self.rounds % 2 == 0:
+            target.life = False
+            print(f"Caçador matou o jogador {target}.")
+        else:
+            print("Caçador não pode matar nesta rodada.")
+
+    def vote(self):
+        """Caçador vota normalmente."""
+        print("Caçador votou.")
+
+
+class Acougueiro(Player):
+    def __init__(self, life=True, rounds=0):
+        super().__init__(life, rounds)
+
+    def inspect(self, target):
+        """Açougueiro inspeciona um jogador para ver se ele matou alguém."""
+        if hasattr(target, "vampiro_kill_count") and target.vampiro_kill_count > 0:
+            print("Ele cheira a sangue.")
+        elif hasattr(target, "condessa_kill_count") and target.condessa_kill_count > 0:
+            print("Ele cheira a sangue.")
+        elif isinstance(target, Cacador) and target.rounds % 2 == 0:
+            print("Ele cheira a sangue.")
+        else:
+            print("Ele não cheira a sangue.")
+
+    def vote(self):
+        """Açougueiro vota normalmente."""
+        print("Açougueiro votou.")

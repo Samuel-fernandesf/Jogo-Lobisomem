@@ -1,10 +1,27 @@
-{% extends "modelo.html" %}
-
-{% block conteudo %}
-    <h1>Biblioteca</h1>
-    <form method="POST" action="{{url_for('form.adicionar_form')}}">
-        <input type="text" name="nome" placeholder="Nome do jogador" required>
-        <button type="submit">Adicionar</button>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='estilos/style.css') }}">
+    <title>Adicionar Jogadores</title>
+</head>
+<body>
+    <form method="POST">
+        <input type="text" name="nome" placeholder="Digite o nome do jogador">
+        <button type="submit">Adicionar Jogador</button>
     </form>
-{% endblock conteudo %}
-
+    
+    <ul>
+        {% for jogador in jogadores %}
+            <li>{{ jogador }}</li>
+        {% endfor %}
+    </ul>
+    
+    {% if pode_iniciar %}
+        <a href="{{ url_for('jogo.iniciar_jogo') }}">
+            <button>Iniciar Jogo</button>
+        </a>
+    {% endif %}    
+</body>
+</html>
