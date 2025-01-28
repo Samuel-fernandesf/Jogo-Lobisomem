@@ -4,7 +4,7 @@ from routes.jogo import jogo
 from routes.form import form
 
 app = Flask(__name__)
-app.secret_key = 'KJWGHDKJHWGHJKDGWHJDGWJHDGWJHGDJHWDGJHW'
+app.secret_key = 'ABABIBABABABABABABABIBABABA'
 
 #Liga os arquivos de routes ao programa principal, colocando um prefixo na url
 app.register_blueprint(home, url_prefix='/')

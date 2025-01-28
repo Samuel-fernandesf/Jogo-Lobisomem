@@ -3,47 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='estilos/style.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='estilos/jogo.css') }}">
     <title>Ações Noturnas</title>
 </head>
 <body>
-    <header>
-        <h1>The night</h1>
-    </header>
+    <div class="container">
+        <h1>Turno de {{ jogador_atual }}</h1>
+        <p>Seu papel: {{ papel_atual }}</p>
 
-    <h1>Turno de {{ jogador_atual }}</h1>
-    <p>Seu papel: {{ papel_atual }}</p>
-
-    {% if mensagem_inspecao %}
-    <p><strong>{{ mensagem_inspecao }}</strong></p>
-    {% endif %}
-    <!-- Adiciona um botão para o Camponês pular a rodada -->
-    {% if papel_atual == 'Campones' %}
-    <form method="POST">
-        <button type="submit" name="pular" value="true">Pular Rodada</button>
-    </form>
-    {% else %}
-    <!-- Ações normais dos outros papéis -->
-    <form method="POST">
-        <label for="alvo">Selecione um alvo:</label>
-        <select name="alvo" required>
-            {% for jogador in jogadores_vivos %}
-                {% if jogador != jogador_atual %}
-                    <option value="{{ jogador }}">{{ jogador }}</option>
-                {% endif %}
-            {% endfor %}
-        </select>
-        <br>
-
-        {% if papel_atual in ['Vampiro', 'Condessa', 'Caçador'] %}
-            <button type="submit" name="acao" value="matar">Matar</button>
+        {% if mensagem_inspecao %}
+        <p><strong>{{ mensagem_inspecao }}</strong></p>
         {% endif %}
+        <!-- Adiciona um botão para o Camponês pular a rodada -->
+        {% if papel_atual == 'Campones' %}
+        <form method="POST">
+            <button type="submit" name="pular" value="true">Pular Rodada</button>
+        </form>
+        {% else %}
+        <!-- Ações normais dos outros papéis -->
+        <form method="POST">
+            <label for="alvo">Selecione um alvo:</label>
+            <select name="alvo" required>
+                {% for jogador in jogadores_vivos %}
+                    {% if jogador != jogador_atual %}
+                        <option value="{{ jogador }}">{{ jogador }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+            <br>
 
-        {% if papel_atual == 'Açougueiro' %}
-            <button type="submit" name="acao" value="inspecionar">Inspecionar</button>
+            {% if papel_atual in ['Vampiro', 'Condessa', 'Caçador'] %}
+                <button type="submit" name="acao" value="matar">Matar</button>
+            {% endif %}
+
+            {% if papel_atual == 'Açougueiro' %}
+                <button type="submit" name="acao" value="inspecionar">Inspecionar</button>
+            {% endif %}
+        </form>
         {% endif %}
-    </form>
-    {% endif %}
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
->>>>>>> main
+

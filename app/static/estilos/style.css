@@ -152,8 +152,12 @@ li {
     width: 200px;
 }
 .a-h{
-    color: white;
+    color: rgb(173, 173, 173);
 }
 .a-h:hover{
-    color: rgb(173, 173, 173);
+    color: white;
+    
+}
+li {
+    list-style-type: none;
 }
