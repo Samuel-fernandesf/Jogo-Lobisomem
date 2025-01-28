@@ -1,10 +1,12 @@
 {% extends "modelo.html" %}
 
 {% block conteudo %}
+<center><div>
     <h1>Biblioteca</h1>
     <form method="POST" action="{{url_for('form.adicionar_form')}}">
         <input type="text" name="nome" placeholder="Nome do jogador" required>
         <button type="submit">Adicionar</button>
     </form>
+</div>
 {% endblock conteudo %}
 

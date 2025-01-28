@@ -4,6 +4,8 @@ body {
     font-family: "MedievalSharp", serif;
     font-weight: 400;
     font-style: normal;
+    background-image: url('img/backgroundgeral.png');
+    color: white;
   }
   
 .title{
@@ -69,7 +71,6 @@ body {
 }
 .a-h{
     color: white;
-
 }
 .a-h:hover{
     color: rgb(173, 173, 173);
