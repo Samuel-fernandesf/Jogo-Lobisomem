@@ -12,12 +12,10 @@
         <h1>Turno de {{ jogador_atual }}</h1>
         <p>Seu papel: {{ papel_atual }}</p>
 
-        {% if mensagem_inspecao %}
-        <p><strong>{{ mensagem_inspecao }}</strong></p>
-        {% endif %}
-        <!-- Adiciona um botão para o Camponês pular a rodada -->
+        <p id="poder_acougueiro" style="display: none;">Ele cheira a sangue</p>
+        
         {% if papel_atual == 'Campones' %}
-        <form method="POST">
+        <form method="POST">    
             <button type="submit" name="pular" value="true">Pular Rodada</button>
         </form>
         {% else %}
@@ -38,12 +36,13 @@
             {% endif %}
 
             {% if papel_atual == 'Açougueiro' %}
-                <button type="submit" name="acao" value="inspecionar">Inspecionar</button>
+                <button type="submit" name="acao" value="inspecionar" style="display: none;" id="enviar_inspecao">Pronto</button>
+                <button id="inspecionar">Inspecionar</button>
             {% endif %}
         </form>
         {% endif %}
     </div>
+    <script src="{{ url_for('static', filename ='js/realizar_acao.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
-

@@ -1,18 +1,13 @@
 from flask import Blueprint, render_template, redirect, url_for, session, request
 import random
-jogo = Blueprint('jogo', __name__)
 
+jogo = Blueprint('jogo', __name__)
 
 @jogo.route('/iniciar', methods=['POST', 'GET'])
 def iniciar_jogo():
     if 'jogadores' in session and 4 <= len(session['jogadores']) <= 8:
         num_jogadores = len(session['jogadores'])
-        papeis = ['Condessa']  # Condessa obrigatória
-
-        if num_jogadores >= 6:
-            papeis += ['Vampiro', 'Vampiro']
-        else:
-            papeis.append('Vampiro')
+        papeis = ['Condessa']
 
         papeis += ['Açougueiro', 'Caçador']
         papeis += ['Campones'] * (num_jogadores - len(papeis))
@@ -26,13 +21,14 @@ def iniciar_jogo():
         return redirect(url_for('jogo.mostrar_papel', indice=0))
     return redirect(url_for('form.jogo_form'))
 
+
 @jogo.route('/mostrar_papel/<int:indice>', methods=['GET', 'POST'])
 def mostrar_papel(indice):
     jogadores = session.get('jogadores', [])
     papeis = session.get('papeis_jogadores', {})
 
     if indice >= len(jogadores):
-        return redirect(url_for('jogo.iniciar_acoes'))  # Corrigido: Redireciona corretamente após o último jogador
+        return redirect(url_for('jogo.iniciar_acoes'))
 
     jogador_atual = jogadores[indice]
     papel = papeis[jogador_atual]['papel']
@@ -67,22 +63,17 @@ def realizar_acao():
     jogador_atual_idx = session['jogador_atual']
 
     if jogador_atual_idx >= len(fila_acoes):
-        return redirect(url_for('jogo.resumo_rodada'))
-
+        return redirect(url_for('jogo.finalizar_fase'))
 
     jogador_atual = fila_acoes[jogador_atual_idx]
     papel_atual = session['papeis_jogadores'][jogador_atual]['papel']
     jogadores_vivos = [j for j in session['jogadores'] if session['papeis_jogadores'][j]['vivo']]
 
     if papel_atual == 'Campones' and request.method == 'POST':
-        # Se o camponês clicar em "Pular", ele pula sua vez
         if 'pular' in request.form:
-
             session['jogador_atual'] += 1
             session.modified = True
-
             return redirect(url_for('jogo.realizar_acao'))
-
 
     if request.method == 'POST':
         acao = request.form.get('acao')
@@ -92,30 +83,17 @@ def realizar_acao():
             session['papeis_jogadores'][alvo]['marcado_para_morrer'] = True
             session['papeis_jogadores'][jogador_atual].setdefault('matou', True)
 
-        elif acao == 'inspecionar' and alvo and papel_atual == 'Açougueiro':
-            alvo_info = session['papeis_jogadores'][alvo]
-            if alvo_info['papel'] in ['Vampiro', 'Condessa', 'Caçador'] and alvo_info.get('matou', False):
-                mensagem_inspecao = f"{alvo} cheira a sangue!"
-            else:
-                mensagem_inspecao = f"{alvo} não cheira a sangue."
-            session['mensagem_inspecao'] = mensagem_inspecao
-
-        elif acao == 'transformar' and alvo and papel_atual == 'Condessa':
-            if session['papeis_jogadores'][alvo]['papel'] == 'Campones':
-                session['papeis_jogadores'][alvo]['papel'] = 'Vampiro'
 
         session['jogador_atual'] += 1
         session.modified = True
         return redirect(url_for('jogo.realizar_acao'))
 
-    mensagem_inspecao = session.pop('mensagem_inspecao', None)
 
     return render_template(
         'realizar_acao.html',
         jogador_atual=jogador_atual,
         papel_atual=papel_atual,
         jogadores_vivos=jogadores_vivos,
-        mensagem_inspecao=mensagem_inspecao,
     )
 
 
@@ -124,13 +102,11 @@ def finalizar_fase():
     papeis = session.get('papeis_jogadores', {})
     mortos = []
 
-    # Processar mortes ao amanhecer
     for jogador, info in papeis.items():
         if info['marcado_para_morrer']:
             info['vivo'] = False
             mortos.append(jogador)
-            info['marcado_para_morrer'] = False  # Resetar o marcador
-
+            info['marcado_para_morrer'] = False 
     vivos = [jogador for jogador, info in papeis.items() if info['vivo']]
 
     # Verificar condição de vitória
@@ -138,7 +114,6 @@ def finalizar_fase():
     camponeses = sum(1 for jogador in vivos if papeis[jogador]['papel'] == 'Campones')
 
     if len(vivos) == 1:
-        # Se restar 1 jogador, verifica o vencedor
         if camponeses == 1:
             return redirect(url_for('jogo.fim_jogo', vitoria='camponeses'))
         else:
@@ -147,25 +122,18 @@ def finalizar_fase():
     if len(vivos) <= 4 and matadores >= 2:
         return redirect(url_for('jogo.fim_jogo', vitoria='matadores'))
 
-    # Determina se vai para a votação ou para a próxima rodada de ações
-    if session.get('fase_acao', True):  # Se estiver na fase de ações
-        session['fase_acao'] = False  # Muda para fase de votação
-        session['jogador_votando'] = 0  # Reseta quem está votando
-        session['votos'] = {jogador: 0 for jogador in vivos}  # Reseta os votos
+    if session.get('fase_acao', True):
+        session['fase_acao'] = False
+        session['jogador_votando'] = 0
+        session['votos'] = {jogador: 0 for jogador in vivos}
         session.modified = True
         return redirect(url_for('jogo.votacao'))
-    else:  # Se estiver na fase de votação, vai para a fase de ações
-        session['fase_acao'] = True  # Muda para fase de ações
-        session['fila_acoes'] = vivos  # Reinicia a fila de ações
+    else:
+        session['fase_acao'] = True
+        session['fila_acoes'] = vivos
         session['jogador_atual'] = 0  # Reinicia o índice do jogador atual
         session.modified = True
         return redirect(url_for('jogo.realizar_acao'))
-
-
-    mortes = 0
-    vivos = 0
-    acoes = session['acoes']
-    jogadores_objetos = session['players_objetos']
 
 
 @jogo.route('/fim_jogo/<vitoria>')
@@ -246,4 +214,3 @@ def votacao():
             return redirect(url_for('jogo.votacao'))
 
     return render_template('votacao.html', jogador_atual=jogador_atual, vivos=jogadores_vivos)
-

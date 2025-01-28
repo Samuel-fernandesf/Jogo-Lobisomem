@@ -1,8 +1,8 @@
 class Player:
 
     def __init__(self, life=True, rounds=0):
-        self.life = life  # Status de vida do jogador
-        self.rounds = rounds  # Número de rodadas do jogador
+        self.life = life 
+        self.rounds = rounds
 
     def vote(self):
         """Função genérica para votar, pode ser sobrescrita."""
@@ -12,7 +12,7 @@ class Player:
 class Campones(Player):
     def __init__(self, life=True, rounds=0):
         super().__init__(life, rounds)
-        self.has_voted = False  # Controle se o camponês já votou no dia 2
+        self.has_voted = False
 
     def skip_round(self):
         """Camponês apenas pula a rodada."""
@@ -29,7 +29,7 @@ class Campones(Player):
 class Vampiro(Player):
     def __init__(self, life=True, rounds=0):
         super().__init__(life, rounds)
-        self.vampiro_kill_count = 0  # Contador de mortes realizadas pelo vampiro
+        self.vampiro_kill_count = 0
 
     def kill(self, target):
         """Vampiro mata um jogador durante a noite."""
@@ -50,7 +50,7 @@ class Vampiro(Player):
 class Condessa(Player):
     def __init__(self, life=True, rounds=0):
         super().__init__(life, rounds)
-        self.condessa_kill_count = 0  # Contador de mortes realizadas pela condessa
+        self.condessa_kill_count = 0
 
     def kill(self, target):
         """Condessa mata um jogador, mas não pode matar vampiros."""
@@ -112,4 +112,3 @@ class Acougueiro(Player):
     def vote(self):
         """Açougueiro vota normalmente."""
         print("Açougueiro votou.")
-
