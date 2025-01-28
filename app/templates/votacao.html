@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='estilos/style.css') }}">
+    <title>Votação</title>
+</head>
+<body>
+    <h1>Votação</h1>
+    <h2>{{ jogador_atual }}, em quem você vota?</h2>
+    <form method="POST">
+        <ul>
+            {% for jogador in vivos %}
+                <li>
+                    <button name="voto" value="{{ jogador }}">{{ jogador }}</button>
+                </li>
+            {% endfor %}
+        </ul>
+    </form>
+</body>
+</html>

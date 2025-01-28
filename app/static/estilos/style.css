@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap');
 
+/* CSS base para o jogo */
 body {
     font-family: "MedievalSharp", serif;
     font-weight: 400;
@@ -11,8 +12,89 @@ body {
 .title{
     font-size: 9rem;
 }
-.game-menu{
-    margin-top: 8rem;
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 1rem;
+    text-align: center;
+}
+
+button {
+    background-color: #6200ea;
+    min-width: 7rem;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    margin: 0.5rem 0;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+button:hover {
+    background-color: #3700b3;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    margin: 0.5rem 0;
+}
+
+@media (max-width: 768px) {
+
+    body {
+        padding: 1rem;
+    }
+
+    .container {
+        padding: 0.5rem;
+    }
+
+    header {
+        font-size: 1.2rem;
+        padding: 0.8rem;
+    }
+
+    button {
+        padding: 0.5rem;
+        font-size: 0.9rem;
+    }
+
+    ul {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+
+    body {
+        padding: 1rem;
+    }
+
+    header {
+        font-size: 1rem;
+        padding: 0.5rem;
+    }
+
+    button {
+        padding: 0.4rem;
+        font-size: 0.8rem;
+    }
+
+    ul {
+        font-size: 0.8rem;
+    }
 }
 .menu-item{
     font-size: 3rem;

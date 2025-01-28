@@ -1,24 +1,49 @@
-{% extends "modelo.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='estilos/style.css') }}">
+    <title>Ações Noturnas</title>
+</head>
+<body>
+    <header>
+        <h1>The night</h1>
+    </header>
 
+    <h1>Turno de {{ jogador_atual }}</h1>
+    <p>Seu papel: {{ papel_atual }}</p>
 
-
-{% block conteudo %}
-    <h1>Vez de {{ jogador }} ({{ papel }})</h1>
-        
-    {% if jogadores_vivos %}
-        <form action="{{ url_for('jogo.realizar_acao') }}" method="POST">
-            <label for="alvo">Escolha um alvo:</label>
-            <select name="alvo" required>
-                {% for j in jogadores_vivos %}
-                    {% if j != jogador %}
-                        <option value="{{ j }}">{{ j }}</option>
-                    {% endif %}
-                {% endfor %}
-            </select>
-            <button type="submit">Executar Ação</button>
-        </form>
-    {% else %}
-        <p>Não há alvos disponíveis.</p>
+    {% if mensagem_inspecao %}
+    <p><strong>{{ mensagem_inspecao }}</strong></p>
     {% endif %}
-{% endblock conteudo %}
-    
+    <!-- Adiciona um botão para o Camponês pular a rodada -->
+    {% if papel_atual == 'Campones' %}
+    <form method="POST">
+        <button type="submit" name="pular" value="true">Pular Rodada</button>
+    </form>
+    {% else %}
+    <!-- Ações normais dos outros papéis -->
+    <form method="POST">
+        <label for="alvo">Selecione um alvo:</label>
+        <select name="alvo" required>
+            {% for jogador in jogadores_vivos %}
+                {% if jogador != jogador_atual %}
+                    <option value="{{ jogador }}">{{ jogador }}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+        <br>
+
+        {% if papel_atual in ['Vampiro', 'Condessa', 'Caçador'] %}
+            <button type="submit" name="acao" value="matar">Matar</button>
+        {% endif %}
+
+        {% if papel_atual == 'Açougueiro' %}
+            <button type="submit" name="acao" value="inspecionar">Inspecionar</button>
+        {% endif %}
+    </form>
+    {% endif %}
+</body>
+</html>
+>>>>>>> main

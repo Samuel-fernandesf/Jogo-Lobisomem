@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='estilos/style.css') }}">
+    <title>Fim do Jogo</title>
+</head>
+<body>
+    <h1>Fim do Jogo</h1>
+    {% if vitoria == 'matadores' %}
+        <p>Os Matadores venceram o jogo!</p>
+
+    {% elif vitoria == 'empate' %}
+        <p>Empate nenhum vivo no final da rodada</p>
+    {% else %}
+        <p>Os Camponeses venceram o jogo!</p>
+    {% endif %}
+
+    <a href="{{ url_for('form.jogo_form') }}">Voltar ao Início</a>
+</body>
+</html>
