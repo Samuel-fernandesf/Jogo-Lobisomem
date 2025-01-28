@@ -5,12 +5,12 @@ Créditos
 Diretores
 
 Gerais:
-Yagor Vitor
+Yagor Vitor,
 Luiz Leli
 
 Criativo e estilo:
-Yuri Fernandes dos Santos
-Marco Grammari
+Yuri Fernandes dos Santos,
+Marco Gramari
 
 Programação e Git:
 Samuel Fernandes Filho
@@ -18,17 +18,17 @@ Samuel Fernandes Filho
 Integrantes
 
 Criativo e estilo:
-Yasmim
-Sarah
-Luana
-Victor
-Sophia
-Maria
+Yasmim,
+Sarah,
+Luana,
+Victor,
+Sophia,
+Maria,
 
 Programação:
-Nalany
-Manuela
-Miguel
+Nalany,
+Manuela,
+Miguel,
 
 
 Tutorial
