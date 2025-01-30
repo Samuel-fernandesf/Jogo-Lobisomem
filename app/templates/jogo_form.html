@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,28 +5,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ url_for('static', filename='estilos/jogo.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <title>Adicionar Jogadores</title>
 </head>
 <body>
     <div class="container text-center">
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class='alert alert-{{category}} alert-dismissible fade-show' role='alert' id="alert-{{ loop.index }}">
+                        <button
+                        type="button"
+                        class="btn btn-close"
+                        data-bs-dismiss="alert"
+                        aria-label="Close">
+                        </button>
+                        {{message}}
+                        <script>
+                            setTimeout(function() {
+                                let alert = document.getElementById('alert-{{ loop.index }}');
+                                if (alert) {
+                                    let closeButton = alert.querySelector('.btn-close');
+                                    closeButton.click();
+                                }
+                            }, 5000); 
+                        </script>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
         <form method="POST">
             <input type="text" name="nome" placeholder="Digite o nome do jogador">
             <button type="submit">Adicionar Jogador</button>
         </form>
         
-        <ul>
+        <table class="table">
+            <tr>
+                <th>Jogador</th>
+                <th>#</th>
+            </tr>
             {% for jogador in jogadores %}
-                <li class="list-style-none">{{ jogador }}</li>
+                <tr>
+                    <td>{{ jogador.nome }}</td>
+                    <td><a class="btn btn-outline-danger" href="/form/remover/{{jogador.id}}"><i class="bi bi-trash3-fill "></i></a></td>
+                </tr>
             {% endfor %}
-        </ul>
+        </table>
         
         {% if pode_iniciar %}
             <a href="{{ url_for('jogo.iniciar_jogo') }}">
                 <button>Iniciar Jogo</button>
             </a>
         {% endif %}  
-
     <div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script> 
 </body>
 </html>
