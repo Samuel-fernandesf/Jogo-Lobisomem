@@ -14,19 +14,20 @@
 </head>
 <body>
 
-    <div class="container">
-        <h1>Entregue o dispositivo para o jogador(a) {{ jogador }}</h1>
+    <center>
+    <div class="container"><br><br>
+        <h1>Entregue o dispositivo para o jogador(a) {{ jogador }}</h1><br>
         
         <form method="POST">
-            <button type="button" class="btn btn-primary" id="revelar-papel">Revelar papel</button>
+            <button type="button" class="btn btn-primary" id="revelar-papel">Revelar papel</button><br>
         </form>
         
         <div id="papel" class="mt-4">
-            <h2>Seu papel é: {{ papel }}</h2>
+            <h2>Seu papel é: {{ papel }}</h2><br>
         </div>
 
         <div id="mensagem" class="mb-4">
-            <p><strong>Por favor, passe o celular para o jogador seguinte!</strong></p>
+            <p><strong>Por favor, passe o celular para o jogador seguinte!</strong></p><br>
             <form method="POST">
                 <button type="submit">Próximo</button>
             </form>

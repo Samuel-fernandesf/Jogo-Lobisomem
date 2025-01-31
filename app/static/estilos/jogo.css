@@ -6,21 +6,39 @@ body{
     color: white;
 }
 
-/* Estilo básico para o menu */
+
 nav {
-    background-color: #b5b5b5;
+    background-color: #333333cb; 
     padding: 10px 20px;
 }
 
-/* Estilo para a lista do menu */
+
+#seta {
+    font-size: 30px; 
+    color: white; 
+    text-decoration: none; 
+    transition: color 0.3s ease; 
+}
+
+
+#seta:hover {
+    color: #ddd; 
+}
+
+
+
+nav {
+    padding: 10px 20px;
+}
+
 .menu {
     list-style-type: none;
     padding: 0;
     margin: 0;
     display: flex;
-    width: 100%; /* Garante que o menu ocupe toda a largura */
-    justify-content: space-between; /* Distribui os itens com a seta à esquerda e o texto centralizado */
-    align-items: center; /* Alinha verticalmente os itens */
+    width: 100%;
+    justify-content: space-between; 
+    align-items: center; 
 }
 
 
@@ -38,7 +56,6 @@ nav {
 
 .menu li a {
     text-decoration: none;
-    color: black;
     font-size: 18px;
     font-weight: bold;
     padding: 10px 15px;
@@ -47,7 +64,6 @@ nav {
 
 .menu li a:hover {
     color: white;
-    background-color: #8c8c8c;
 }
 
 
@@ -60,3 +76,26 @@ nav {
 #botao {
     background-color: #8c8c8c;
 }
+
+#formulario {
+    justify-content: left;
+}
+
+.formulario form {
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+}
+
+.formulario .form-control {
+    width: auto; 
+    margin-right: 10px; 
+}
+
+body {
+    font-family: "MedievalSharp", serif;
+    font-weight: 400;
+    font-style: normal;
+    background-image: url('img/backgroundgeral.png');
+    color: white;
+  }

@@ -12,8 +12,10 @@
      
     <nav>
         <ul class="menu">
-              <li><a href="/" class="bi bi-arrow-left" id="seta"></a></li>
-              <li class="center-item"><a href="#">Jogadores</a></li>
+              <li><a href="/" class="bi bi-arrow-left-square-fill" id="seta"></a></li>
+              <div class="d-flex justify-content-center w-100">
+                <span class="navbar-brand mb-0 h1" style="font-size: 40px;">Jogadores</span>
+            </div>
         </ul>
     </nav>
     
@@ -44,23 +46,23 @@
         {% endwith %}
         
         <br>
-        <form method="POST">
-
-            <input type="text" name="nome" minlength="3" maxlength="18" placeholder="Digite o nome do jogador" required="required">
-            <button type="submit">Adicionar Jogador</button>
-
-        </form>
+        <div class="formulario">
+            <form method="POST" class="d-flex">
+                <input class="form-control me-2" type="text" name="nome" minlength="3" maxlength="18" placeholder="Digite o nome do jogador" required="required">
+                <button type="submit" class="btn btn-light">Adicionar Jogador</button>
+            </form>
+        </div>        
         <br>
         
-        <table class="table">
+        <table class="table table-striped">
             <tr>
                 <th>Jogador</th>
-                <th>Remover</th>
+                <th>ﾠ</th>
             </tr>
             {% for nome in jogadores %}
                 <tr>
                     <td>{{ nome }}</td>
-                    <td><a class="btn btn-outline-danger" href="/form/remover/{{nome}}"><i class="bi bi-trash3-fill "></i></a></td>
+                    <td><a class="btn btn-outline-dark" href="/form/remover/{{nome}}">Remover Jogador</a></td>
                 </tr>
             {% endfor %}
         </table>
@@ -68,7 +70,7 @@
         {% if pode_iniciar %}
             <a href="{{ url_for('jogo.iniciar_jogo') }}">
                 
-                <button class="botao">Iniciar Jogo</button>
+                <button class="btn btn-light">Iniciar Jogo</button>
             </a>
         {% endif %}  
     </div>
