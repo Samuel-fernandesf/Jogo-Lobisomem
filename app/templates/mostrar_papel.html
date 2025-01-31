@@ -7,10 +7,15 @@
     <title>Seu Papel</title>
 </head>
 <body>
-    <h1>{{ jogador }}, seu papel é:</h1>
-    <h2>{{ papel }}</h2>
+    <h1>{{ jogador }}</h1>
+    <h2>Seu Papel: {{ papel }}</h2>
+
+    {% if aliados %}
+        <p><strong>Aliados:</strong> {{ aliados | join(", ") }}</p>
+    {% endif %}
+
     <form method="POST">
-        <button type="submit">Próximo</button>
+        <button type="submit">Continuar</button>
     </form>
 
 </body>
