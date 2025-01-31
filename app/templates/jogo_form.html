@@ -9,8 +9,15 @@
     <title>Adicionar Jogadores</title>
 </head>
 <body>
+     
+    <nav>
+        <ul class="menu">
+              <li><a href="/" class="bi bi-arrow-left" id="seta"></a></li>
+              <li class="center-item"><a href="#">Jogadores</a></li>
+        </ul>
+    </nav>
+    
     <div class="container text-center">
-        
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 {% for category, message in messages %}
@@ -35,16 +42,18 @@
                 {% endfor %}
             {% endif %}
         {% endwith %}
-
+        
+        <br>
         <form method="POST">
             <input type="text" name="nome" placeholder="Digite o nome do jogador">
-            <button type="submit">Adicionar Jogador</button>
+            <button type="submit" class="botao">Adicionar Jogador</button>
         </form>
+        <br>
         
         <table class="table">
             <tr>
                 <th>Jogador</th>
-                <th>#</th>
+                <th>Remover</th>
             </tr>
             {% for jogador in jogadores %}
                 <tr>
@@ -56,12 +65,12 @@
         
         {% if pode_iniciar %}
             <a href="{{ url_for('jogo.iniciar_jogo') }}">
-                <button>Iniciar Jogo</button>
+                
+                <button class="botao">Iniciar Jogo</button>
             </a>
         {% endif %}  
-    <div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script> 
 </body>
 </html>
-

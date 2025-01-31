@@ -5,3 +5,58 @@ body{
     background-color: black;
     color: white;
 }
+
+/* Estilo básico para o menu */
+nav {
+    background-color: #b5b5b5;
+    padding: 10px 20px;
+}
+
+/* Estilo para a lista do menu */
+.menu {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    width: 100%; /* Garante que o menu ocupe toda a largura */
+    justify-content: space-between; /* Distribui os itens com a seta à esquerda e o texto centralizado */
+    align-items: center; /* Alinha verticalmente os itens */
+}
+
+
+.menu li {
+    margin: 0 15px; 
+}
+
+
+#menu .seta {
+    font-size: 30px;
+    margin-left: 0; 
+    margin-right: 0; 
+}
+
+
+.menu li a {
+    text-decoration: none;
+    color: black;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px 15px;
+    transition: color 0.3s, background-color 0.3s;
+}
+
+.menu li a:hover {
+    color: white;
+    background-color: #8c8c8c;
+}
+
+
+.center-item {
+    position: absolute;
+    left: 50%; 
+    transform: translateX(-50%); 
+}
+
+#botao {
+    background-color: #8c8c8c;
+}
