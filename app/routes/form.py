@@ -29,6 +29,9 @@ def jogo_form():
         if len(session['jogadores']) < 8:
             session['jogadores'].append(nome)
             session.modified = True
+        else:
+            flash('Limite de jogadores atingido!', category='danger')
+            return redirect(url_for('form.jogo_form'))
 
         return redirect(url_for('form.jogo_form'))
 
@@ -36,24 +39,17 @@ def jogo_form():
     pode_iniciar = len(session.get('jogadores', [])) >= 4
     return render_template(
         'jogo_form.html',
-        jogadores = jogadores,
-        #jogadores=session.get('jogadores', []),
+        jogadores=session.get('jogadores', []),
         pode_iniciar=pode_iniciar
     )
 
-@form.route('/remover/<int:id>')
-def remover(id):
+@form.route('/remover/<nome>')
+def remover(nome):
 
     remove_jogador = None
 
-    #Remove do database
-    for jogador in jogadores:
-        if jogador['id'] == id:
-            remove_jogador = jogador
-            jogadores.remove(jogador)
-
     #Remove da sessão
-    if remove_jogador['nome'] in session.get('jogadores', []):
-        session['jogadores'].remove(remove_jogador['nome'])
+    if nome in session.get('jogadores', []):
+        session['jogadores'].remove(nome)
         session.modified = True    
     return redirect(url_for('form.jogo_form'))
