@@ -1,3 +1,4 @@
+
 from flask import Flask
 from routes.home import home
 from routes.jogo import jogo
