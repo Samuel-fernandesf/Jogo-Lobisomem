@@ -1,13 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='estilos/style.css') }}">
-    <title>Tutorial</title>
-</head>
-<body>
-    <h1>Tutorial do Jogo</h1>
-    <p>Aqui você aprenderá as regras do jogo.</p>
-</body>
-</html>
+
+{% extends "modelo.html" %}
+
+{%block conteudo%}
+    <center><div class="ftf">
+        <h1 class="p_c_t">Tutorial</h1>
+        <div>
+            <p class="p_t">Condessa é um jogo de dedução social que se baseia em mitologia e papeis históricos. Tem como temática a luta entre o povo e as criaturas infiltradas. <br>
+                <br>
+                No jogo os jogadores são divididos em duas equipes: os moradores do reino e as criaturas, os moradores tentam descobrir quem são as criaturas infiltradas e tentam eliminá-las sem serem descobertos. <br>
+                <br> 
+                O jogo se alterna entre o dia e a noite. Durante o noite as criaturas escolhem um morador do reino para matar. Durante o dia, os jogadores votam em um jogador que suspeitam ser a criatura.</p>
+        </div>
+        <a href="/" class="p_s a-h ds">Voltar</a>
+    </div>
+
+{%endblock%}
+
+

@@ -2,12 +2,15 @@
 
 /* CSS base para o jogo */
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    background-color: #f4f4f9;
-    color: #333;
+    font-family: "MedievalSharp", serif;
+    font-weight: 400;
+    font-style: normal;
+    background-image: url('img/backgroundgeral.png');
+    color: white;
+  }
+  
+.title{
+    font-size: 9rem;
 }
 
 .container {
@@ -93,3 +96,69 @@ li {
         font-size: 0.8rem;
     }
 }
+.menu-item{
+    font-size: 3rem;
+}
+.p_d {
+    font-size: 4rem;
+    margin-top: 2rem;
+}
+.p_c{
+    font-size: 8rem;
+    margin-top: 6rem;
+}
+.p_c_t {
+    margin-top: 1rem;
+    font-size: 8rem;
+}
+.p_s{
+    font-size: 3rem;
+    text-decoration: none;
+}
+.p {
+    font-size: 2rem;
+    margin-top: -1.5rem;   
+}
+.p_t{
+    font-size: 2rem;
+    margin-left: 30%;
+    margin-right: 30%;
+}
+.sp {
+    margin-top: 2rem;
+}
+.sp_g {
+    margin-top: 4rem;
+}
+.ftf{
+    margin-bottom: 6rem;
+}
+.ftf_t{
+    margin-bottom: 6rem;
+    overflow-y:hidden;
+}
+.back {
+    background-image: url('img/background.png');
+}
+.tt {
+    color: white;
+    font-size: 6rem;
+    margin-top: -6rem;
+    margin-bottom: 2rem;
+}
+.img{
+    margin-top: 3rem;
+    height: 200px;
+    width: 200px;
+}
+.a-h{
+    color: rgb(173, 173, 173);
+}
+.a-h:hover{
+    color: white;
+    
+}
+li {
+    list-style-type: none;
+}
+

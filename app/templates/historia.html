@@ -1,13 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='estilos/style.css') }}">
-    <title>História</title>
-</head>
-<body>
-    <h1>História do Jogo</h1>
-    <p>Descubra o enredo por trás do jogo.</p>
-</body>
-</html>
+{% extends "modelo.html" %}
+
+{%block conteudo%}
+    <center><div class="ftf">
+        <h1 class="p_c_t">Historia</h1>
+        <div>
+            <p class="p_t"><br>
+                A historia do jogo se passa em um reino europeu muito antigo, onde havia muitos relatos dos moradores que afirmavam desaparecimentos durante a noite e mortes misteriosas. <br>
+                <br>
+                Nossos responsáveis são os vampiros, bruxas, entre outras criaturas que nesse reino habitam. Tendo como sua fonte inicial de toda desgraça a bela e imortal Condessa, ela tem como objetivo a proliferação de sua própria espécie. <br>
+                <br>
+                A Condessa busca a séculos a formação de um reino somente com seus iguais, ou seja, um reino somente composto por criaturas, a exterminação dos humanos é algo crucial para seu objetivo se concretizar.
+            </p>
+        </div>
+        <a href="/" class="p_s a-h">Voltar</a>
+    </div>
+    
+{%endblock%}
+
