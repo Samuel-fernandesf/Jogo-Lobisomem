@@ -23,7 +23,7 @@
     </ul>
 
     <p>Agora, a votação irá começar!</p>
-    <form method="POST">
+    <form method="POST" action='{{ url_for('jogo.votacao') }}'>
         <button type="submit">Iniciar Votação</button>
     </form>
 </body>
