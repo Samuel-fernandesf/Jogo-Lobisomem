@@ -237,4 +237,4 @@ def votacao():
     return render_template(
         'votacao.html', jogador_atual=jogador_atual, vivos=jogadores_vivos, mortos=jogadores_mortos
     )
-
+ 
