@@ -1,0 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap');
+
+/* CSS base para o jogo */
+body {
+    font-family: "MedievalSharp", serif;
+    font-weight: 400;
+    font-style: normal;
+    background-image: url('img/background.png');
+    color: white;
+    justify-content: center;
+    align-items: center;
+  }

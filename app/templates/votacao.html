@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="{{ url_for('static', filename='estilos/jogo.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='estilos/style2.css') }}">
+    <link href="static/img/icon.png" rel="icon">
     <title>Votação</title>
 </head>
-<body>
-    <div class="container">
-        <h1>Votação</h1>
-        <h2>{{ jogador_atual }}, em quem você vota?</h2>
+<body class="body-b">
+    <div class="container"><br>
+        <h1>Votação</h1><br>
+        <h2>{{ jogador_atual }}, em quem você vota?</h2><br>
         <form method="POST">
             <ul>
                 {% for jogador in vivos %}
