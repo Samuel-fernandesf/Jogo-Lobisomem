@@ -10,13 +10,13 @@
 <body>
     <div class="container">
         <h1>Fim do Jogo</h1>
-        {% if vitoria == 'matadores' %}
-            <p>Os Matadores venceram o jogo!</p>
+        {% if vitoria == 'monstros' %}
+            <p>As Criaturas venceram o jogo!</p>
 
         {% elif vitoria == 'empate' %}
-            <p>Empate nenhum vivo no final da rodada</p>
+            <p>Empate, nenhum vivo para contar a historia.</p>
         {% else %}
-            <p>Os Camponeses venceram o jogo!</p>
+            <p>O Vilarejo venceu o jogo!</p>
         {% endif %}
 
         <a href="{{ url_for('form.jogo_form') }}">Voltar ao Início</a>
