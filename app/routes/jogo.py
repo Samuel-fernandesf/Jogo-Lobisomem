@@ -2,25 +2,28 @@ from flask import Blueprint, render_template, redirect, url_for, session, reques
 import random
 
 jogo = Blueprint('jogo', __name__)
+
 @jogo.route('/iniciar', methods=['POST', 'GET'])
 def iniciar_jogo():
     if 'jogadores' in session and 4 <= len(session['jogadores']) <= 8:
         num_jogadores = len(session['jogadores'])
-        papeis = ['Condessa']  # Condessa obrigatória
+        papeis = ['Condessa']
         papeis.append('Vampiro')
         papeis += ['Açougueiro', 'Caçador']
-        papeis += ['Campones'] * (num_jogadores - len(papeis))
+        papeis += ['Campones'] * (num_jogadores - len(papeis)) # Ele preenche o que sobrou dos jogadores com Camponeses.
         random.shuffle(papeis)
         session['papeis_jogadores'] = {
             jogador: {'papel': papeis[i], 'vivo': True, 'marcado_para_morrer': False}
             for i, jogador in enumerate(session['jogadores'])
-        }
+        } # compreensao de dicionario, ele associa um papel da lista embaralhada para cada jogador da session.
+        
         # Criar uma lista de Vampiros e Condessa
         session['vampiros'] = [
             jogador for jogador, info in session['papeis_jogadores'].items()
             if info['papel'] in ['Vampiro', 'Condessa']
         ]
         session.modified = True
+        
         return redirect(url_for('jogo.mostrar_papel', indice=0))
     return redirect(url_for('form.jogo_form'))
 
@@ -28,7 +31,8 @@ def iniciar_jogo():
 def mostrar_papel(indice):
     jogadores = session.get('jogadores', [])
     papeis = session.get('papeis_jogadores', {})
-    vampiros = session.get('vampiros', []) 
+    vampiros = session.get('vampiros', [])
+    
     if indice >= len(jogadores):
         return redirect(url_for('jogo.iniciar_acoes'))  # Após o último jogador, inicia ações
     jogador_atual = jogadores[indice]
@@ -48,7 +52,6 @@ def mostrar_papel(indice):
     
 @jogo.route('/iniciar_acoes', methods=['GET', 'POST'])
 def iniciar_acoes():
-
     for jogador in session['jogadores']:
         if session['papeis_jogadores'][jogador]['papel'] == 'Açougueiro':
             session.pop(f'{jogador}_inspecionou', None)
@@ -62,10 +65,9 @@ def iniciar_acoes():
         session.modified = True
         return redirect(url_for('jogo.realizar_acao'))
     return redirect(url_for('form.jogo_form'))
-@jogo.route('/realizar_acao', methods=['GET', 'POST'])
 
+@jogo.route('/realizar_acao', methods=['GET', 'POST'])
 def realizar_acao():
-    print('a1')
     if 'fila_acoes' not in session:
         return redirect(url_for('form.jogo_form'))
     
