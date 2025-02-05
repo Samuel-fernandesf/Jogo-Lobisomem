@@ -1,25 +1,28 @@
 @import url('https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap');
 
-/* CSS base para o jogo */
-html, body {
-    height: 100%; 
-    margin: 0; 
+body {
+    height: 100%;
+    margin: 0;
     font-family: "MedievalSharp", serif;
     font-weight: 400;
     font-style: normal;
     color: white;
-    
-  
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
+    background-color: #1a1a1a; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    overflow: hidden;
+    min-height: 100vh; 
 }
 
-.body-b{
+.body-b {
     font-family: "MedievalSharp", serif;
     font-weight: 400;
     font-style: normal;
     background-image: url('img/brancoback.png');
+    background-size: cover;
+    background-position: center;
     color: white;
     justify-content: center;
     align-items: center;
@@ -27,23 +30,29 @@ html, body {
 }
 
 body {
-    background-image: url('img/backgroundgeral.png  ');
+    background-image: url('img/backgroundgeral.png');
     background-size: cover; 
-    background-position: center; 
+    background-position: center;
+    background-attachment: fixed; 
+    color: #f0f0f0; /* Cor de texto mais suave */
 }
 
 .container {
-    text-align: center; 
-    width: 110%; 
+    text-align: center;
+    width: 60%; 
+    max-width: 800px; 
     padding: 20px;
-    background-color: #333; 
-    border-radius: 10px; 
-    
+    background-color: rgba(0, 0, 0, 0.8); 
+    border: 3px solid #444; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6); 
+    margin-top: 50px; 
 }
 
 h1, p {
     font-size: 40px;
     margin-bottom: 20px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8); /* Sombra para dar efeito gótico */
+    color: #ccc;
 }
 
 button {
@@ -51,40 +60,75 @@ button {
     padding: 10px 20px;
     margin-top: 10px;
     cursor: pointer;
-    background-color: #dfdfdf;
-    color: rgb(221, 0, 0);
-    border: none;
-    border-radius: 5px;
-    transition: background-color 0.3s;
+    background-color: #333; 
+    color: #e6e6e6; 
+    border: 2px solid #444;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7); 
+    transition: all 0.3s ease;
 }
 
+
 button:hover {
-    background-color: #666;
+    background-color: #555; 
+    color: #fff; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
 }
 
 select {
     font-size: 16px;
-    padding: 5px 10px;
-    appearance: none; 
-    -webkit-appearance: none; 
-    -moz-appearance: none;
     padding: 10px;
-    border: 1px solid #ccc;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border: 2px solid #444;
     background-color: transparent;
     width: 200px;
-    color: white    ;
+    color: white;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
 }
+
 
 .nome_player {
     color: #ff0000;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
 }
 
-select option {
+select  {
     color: #ccc;
 }
-
 
 ul {
     list-style-type: none;
     padding: 0;
+}
+
+.vampiro { 
+    color: #d60000; 
+    font-weight: bold;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7); 
+}
+
+.condessa { 
+    color: #9b3d7e; 
+    font-weight: bold;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+.cacador { 
+    color: #007700; 
+    font-weight: bold;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+.acougueiro { 
+    color: #ff6600; 
+    font-weight: bold;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+.campones { 
+    color: #0044cc; 
+    font-weight: bold;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
 }

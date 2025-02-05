@@ -1,71 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="{{ url_for('static', filename='estilos/style2.css') }}">
-    <link href="static/img/icon.png" rel="icon">
-    
-    <style>
-        select option {
-            color: white;
-            background-color: #333;
-        }
-    </style>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <link rel="stylesheet" href="{{ url_for('static', filename='estilos/style2.css') }}">
+        <title>Ações Noturnas</title>
+        <style>
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1 id='entregar-dispositivo'>Entregue o dispositivo para o(a) <span class='nome_player'>{{ jogador_atual }}</span></h1>
 
-    <title>Ações Noturnas</title>
-</head>
-<body>
-    <div class="container">
-        <h1>Turno de <span class="nome_player">{{ jogador_atual }}<span></span></h1>
-        <p>Seu papel: {{ papel_atual }}</p>
+            <form method='POST'>
+                <button type="button" id="revelar-papel">Realizar ação</button>
+            </form>
 
-        <p id="poder_acougueiro" style="display: none;">Ele cheira a sangue</p>
-        
-        {% if papel_atual == 'Campones' %}
-        <form method="POST">    
-            <button type="submit" name="pular" value="true">Pular Rodada</button>
-        </form>
-        {% else %}
-
-        <form method="POST">
-            <h3>Selecione um alvo</h3><br>
-            <script>
-                function toggleDropdown() {
-                    const dropdown = document.getElementById('dropdown');
-                    dropdown.style.display = (dropdown.style.display === 'none') ? 'block' : 'none';
-                }
-
-                function selectOption(option) {
-                    alert('Você escolheu: ' + option);
-                    document.getElementById('dropdown').style.display = 'none';
-                }
-            </script>
-
-            <label for="alvo"></label>
-            <select name="alvo" required>
-                {% for jogador in jogadores_vivos %}
-                    {% if jogador != jogador_atual %}
-                        <option value="{{ jogador }}">{{ jogador }}</option>
+            <div id="papel" class="mt-4" style="display: none;">
+                <p>Seu papel: <span id="papel-atual">{{ papel_atual }}</span></p>
+                {% if mensagem_inspecao %}
+                    <p><strong>{{ mensagem_inspecao }}</strong></p>
+                {% endif %}
+            
+                {% if papel_atual == 'Campones' %}
+                <form method="POST">
+                    <button type="submit" name="pular" value="true">Pular Rodada</button>
+                </form>
+                {% else %}
+                <!-- Ações normais dos outros papéis -->
+                <form method="POST">
+                    <label for="alvo">Selecione um alvo:</label>
+                    <select name="alvo" required>
+                        {% for jogador in jogadores_vivos %}
+                            {% if jogador != jogador_atual %}
+                                <option value="{{ jogador }}">{{ jogador }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                    <br>
+            
+                        {% if papel_atual in ['Vampiro', 'Condessa', 'Caçador'] %}
+                            <button type="submit" name="acao" value="matar">Matar</button>
+                        {% endif %}
+            
+                    {% if papel_atual == 'Açougueiro' %}
+                        <button type="submit" name="acao" value="inspecionar" class="btn_inspecionar">Inspecionar</button>
+                        <button class="botao_proximo_acougueiro">Proximo</button>
                     {% endif %}
-                {% endfor %}
-            </select>
-            <br>
+                </form>
+                {% endif %}
+            </div>
 
-            {% if papel_atual in ['Vampiro', 'Condessa', 'Caçador'] %}
-                <button type="submit" name="acao" value="matar">Matar</button>
-            {% endif %}
-
-            {% if papel_atual == 'Açougueiro' %}
-                <button type="submit" name="acao" value="inspecionar" style="display: none;" id="enviar_inspecao">Pronto</button>
-                <button id="inspecionar">Inspecionar</button>
-            {% endif %}
-        </form>
-        {% endif %}
-    </div>
-
-    <script src="{{ url_for('static', filename ='js/realizar_acao.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-</body>
+        <script src="{{ url_for('static', filename='js/acougueiro.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/mudar_cor_papel.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/teste.js') }}"></script>
+    </body>
 </html>
