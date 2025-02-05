@@ -161,14 +161,3 @@ li {
 li {
     list-style-type: none;
 }
-
-.new{
-    font-family: "MedievalSharp", serif;
-    font-weight: 400;
-    font-style: normal;
-    background-image: url('img/bra');
-    color: white;
-    justify-content: center;
-    align-items: center;
-    font-size: 24px;
-}
