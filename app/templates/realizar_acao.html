@@ -11,18 +11,71 @@
     </head>
     <body>
         <div class="container">
-            <h1 id='entregar-dispositivo'>Entregue o dispositivo para o(a) <span class='nome_player'>{{ jogador_atual }}</span></h1>
-
-            <form method='POST'>
-                <button type="button" id="revelar-papel">Realizar ação</button>
-            </form>
+            <div id='entregar-dispositivo'>
+                <h1>Entregue o dispositivo para o(a) <span class='nome_player'>{{ jogador_atual }}</span></h1>
+                <form method='POST'>
+                    <button type="button" id="revelar-papel">Realizar ação</button>
+                </form>
+            </div>
 
             <div id="papel" class="mt-4" style="display: none;">
                 <p>Seu papel: <span id="papel-atual">{{ papel_atual }}</span></p>
                 {% if mensagem_inspecao %}
                     <p><strong>{{ mensagem_inspecao }}</strong></p>
                 {% endif %}
-            
+                {% if papel_atual == "Condessa" %}
+                    <div class="dudu">
+                        <div class="flip">
+                            <div class="flip-inner">
+                                <div class="face front"></div>
+                                <div class="face back" id="back-{{ papel_atual | lower }}"></div>
+                            </div>
+                        </div>
+                    </div>
+            {% endif %}
+            {% if papel_atual == "Vampiro" %}
+                <div class="dudu">
+                    <div class="flip">
+                        <div class="flip-inner">
+                            <div class="face front"></div>
+                            <div class="face back" id="back-{{ papel_atual | lower }}"></div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            {% if papel_atual == "Açougueiro" %}
+                <div class="dudu">
+                    <div class="flip">
+                        <div class="flip-inner">
+                            <div class="face front"></div>
+                            <div class="face back" id="back-{{ papel_atual | lower }}"></div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            {% if papel_atual == "Campones" %}
+                <div class="dudu">
+                    <div class="flip">
+                        <div class="flip-inner">
+                            <div class="face front"></div>
+                            <div class="face back" id="back-{{ papel_atual | lower }}"></div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            {% if papel_atual == "Caçador" %}
+                <div class="dudu">
+                    <div class="flip">
+                        <div class="flip-inner">
+                            <div class="face front"></div>
+                            <div class="face back" id="back-{{ papel_atual | lower }}"></div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            </div>
+            <br>
+            <div id='botoes' style='display: none'>
                 {% if papel_atual == 'Campones' %}
                 <form method="POST">
                     <button type="submit" name="pular" value="true">Pular Rodada</button>
@@ -55,5 +108,6 @@
         <script src="{{ url_for('static', filename='js/acougueiro.js') }}"></script>
         <script src="{{ url_for('static', filename='js/mudar_cor_papel.js') }}"></script>
         <script src="{{ url_for('static', filename='js/teste.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/script.js') }}"></script>
     </body>
 </html>
