@@ -1,7 +1,193 @@
+@import url('https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap');
+
 li {
     list-style-type: none;
 }
 body{
     background-color: black;
+    color: rgb(255, 255, 255);
+    font-family: "MedievalSharp", serif;
+}
+.body-b{
     color: white;
+    font-family: "MedievalSharp", serif;
+    background-image: url(img/backgroundgeral.png);
+}
+.formx{
+    margin-top: 2rem;
+    text-decoration: none;
+}
+input{
+    border-radius: 20px;
+    margin-bottom: 5px;
+    margin-top: -1rem;
+    width: 20rem;
+    text-align: center;
+    border: 3px white solid;
+}
+.img{
+    margin-top: 3rem;
+    height: 200px;
+    width: 200px;
+}
+table {
+    border-collapse: separate;
+    border-spacing: 8px 8px;
+    margin-top: -8px;
+  }
+  
+  td {
+    border: 2px solid rgb(255, 255, 255);
+    border-radius: 20px;
+    border-left-width: 1;
+    min-width: 120px;
+    height: 18px;
+    text-align: center;
+    padding: 3px;
+  }
+  .td-:hover{
+    background-color: red;
+    transition-duration: 0.5s;
+  }
+  .aa{
+    padding-left:45px;
+    padding-right: 45px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+  }
+  
+  td:first-child {
+    border-left-width: 1px;
+  }
+  .lx{
+    width: 30px;
+    height: 20px;
+    margin-bottom: 3px;
+  }
+
+.p_d {
+    font-size: 4rem;
+    margin-top: -1rem;
+}
+.mais{
+    background-color: rgb(0, 0, 0);
+    border-radius: 200px;
+    padding: 5px;
+    border: 2px white solid;
+    margin-top: 5px;
+}
+.mais:hover{
+    background-color: rgb(1, 202, 1);
+    transition-duration: 0.5s;
+    
+}
+.play{
+  background-color: rgb(0, 0, 0);
+  border-radius: 200px;
+  padding: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border: 2px white solid;
+  margin-top: 5px;
+  font-size: 2rem;
+  color: white;
+}
+.play:hover{
+  background-color: darkred;
+  transition-duration: 0.5s;
+}
+.img-mais{
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  align-items: center;
+} 
+.img-play{
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  align-items: center;
+  margin-left: 4px;
+} 
+
+#card {
+  display: flex;
+  justify-content: center;
+  transform-style: preserve-3d; /* importante para o flip */
+  transition: all .5s;
+}
+
+.face {
+  width: 477.38px;
+  height: 750px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  position: absolute;
+  border-radius: 10px;
+}
+
+#front {
+  background-image: url(img/back.png) ;;
+  transform: rotateY(180deg);
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+#back-condessa{
+  background-image: url(img/condessa.jpg) ;
+  backface-visibility: hidden; /* importante para o flip */
+  width: 477.38px;
+  height: 750px;
+  background-position: center;
+  background-repeat: no-repeat; 
+  background-size: 477.38px 750px;
+}
+#back-vampiro{
+  background-image: url(img/vampiro.png ) ;
+  backface-visibility: hidden; /* importante para o flip */
+  width: 477.38px;
+  height: 750px;
+  background-position: center;
+  background-repeat: no-repeat;  
+  background-size: 477.38px 750px;
+}
+#back-açougueiro{
+  background-image: url(img/açougueiro.png ) ;
+  backface-visibility: hidden; /* importante para o flip */
+  width: 477.38px;
+  height: 750px;
+  background-position: center;
+  background-repeat: no-repeat;  
+  background-size: 477.38px 750px;
+}
+#back-campones{
+  background-image: url(img/campones.png ) ;
+  backface-visibility: hidden; /* importante para o flip */
+  width: 477.38px;
+  height: 750px;
+  background-position: center;
+  background-repeat: no-repeat;  
+  background-size: 477.38px 750px;
+}
+#back-caçador{
+  background-image: url(img/caçador.png ) ;
+  backface-visibility: hidden; /* importante para o flip */
+  width: 477.38px;
+  height: 750px;
+  background-position: center;
+  background-repeat: no-repeat;  
+  background-size: 477.38px 750px;
+}
+
+
+.flip {
+  transform: rotateY(180deg);
+}
+.dudu{
+  background-color: grey;
+  border-radius: 200px;
+  width: 100%;
 }

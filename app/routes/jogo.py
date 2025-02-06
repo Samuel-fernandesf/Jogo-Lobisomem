@@ -5,7 +5,7 @@ jogo = Blueprint('jogo', __name__)
 
 @jogo.route('/iniciar', methods=['POST', 'GET'])
 def iniciar_jogo():
-    if 'jogadores' in session and 4 <= len(session['jogadores']) <= 8:
+    if 'jogadores' in session and 4 <= len(session['jogadores']) <= 10:
         num_jogadores = len(session['jogadores'])
         papeis = ['Condessa']
         papeis.append('Vampiro')
@@ -167,11 +167,6 @@ def finalizar_fase():
         else:
             return redirect(url_for('jogo.fim_jogo', vitoria='monstros'))
         
-    if monstros > aldeoes:
-        return redirect(url_for('jogo.fim_jogo', vitoria='monstros'))
-    
-    elif aldeoes > monstros:
-        return redirect(url_for('jogo.fim_jogo', vitoria='aldeoes'))
 
     if 'fase_acao' not in session or session['fase_acao'] is False:
         session['fase_acao'] = True

@@ -1,3 +1,9 @@
+<<<<<<< HEAD
 jogadores = [
     
 ]
+=======
+jogadores = [
+    
+]
+>>>>>>> styles
