@@ -5,7 +5,7 @@ jogo = Blueprint('jogo', __name__)
 
 @jogo.route('/iniciar', methods=['POST', 'GET'])
 def iniciar_jogo():
-    if 'jogadores' in session and 4 <= len(session['jogadores']) <= 10:
+    if 'jogadores' in session and 6 <= len(session['jogadores']) <= 10:
         num_jogadores = len(session['jogadores'])
         papeis = ['Condessa']
         papeis.append('Vampiro')
@@ -79,10 +79,16 @@ def realizar_acao():
     if 'jogador_atual' not in session:
         session['jogador_atual'] = 0
         
+        
     fila_acoes = session['fila_acoes']
     jogador_atual_idx = session['jogador_atual']
     
+    print(len(session['fila_acoes']))
+    print(session['jogador_atual'])
+    
+    #LUIZ: O PROBLEMA PODE ESTAR AQUI
     if jogador_atual_idx >= len(fila_acoes):
+        print(f'{fila_acoes},{fila_acoes}')
         return redirect(url_for('jogo.finalizar_fase')) # verifica se todos os jogadores ja realizaram as ações.
     
     jogador_atual = fila_acoes[jogador_atual_idx]
@@ -139,6 +145,8 @@ def realizar_acao():
 
 @jogo.route('/finalizar_fase')
 def finalizar_fase():
+    
+    jogadores = session.get('jogadores', [])
     papeis = session.get('papeis_jogadores', {})
     mortos = []
     
@@ -158,15 +166,8 @@ def finalizar_fase():
     # faz a soma dos montros e aldeoes.
     monstros = sum(1 for jogador in vivos if papeis[jogador]['papel'] in ['Vampiro', 'Condessa'])
     aldeoes = sum(1 for jogador in vivos if papeis[jogador]['papel'] in ['Campones', 'Açougueiro', 'Caçador'])
-
-    # quando restarem 2 jogadores, verifica qual grupo ganhou:
-    if len(vivos) <= 2:
-        ultimo_jogador = vivos[0]
-        if papeis[ultimo_jogador]['papel'] in ['Campones', 'Açougueiro', 'Caçador']:
-            return redirect(url_for('jogo.fim_jogo', vitoria='aldeoes'))
-        else:
-            return redirect(url_for('jogo.fim_jogo', vitoria='monstros'))
-        
+    
+    
 
     if 'fase_acao' not in session or session['fase_acao'] is False:
         session['fase_acao'] = True

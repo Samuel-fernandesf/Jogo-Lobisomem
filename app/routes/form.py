@@ -35,8 +35,8 @@ def jogo_form():
 
         return redirect(url_for('form.jogo_form'))
 
-    # Exibe o botão de iniciar jogo apenas se houver 4 ou mais jogadores
-    pode_iniciar = len(session.get('jogadores', [])) >= 4
+    # Exibe o botão de iniciar jogo apenas se houver 6 ou mais jogadores
+    pode_iniciar = len(session.get('jogadores', [])) >= 6
     return render_template(
         'jogo_form.html',
         jogadores=session.get('jogadores', []),
