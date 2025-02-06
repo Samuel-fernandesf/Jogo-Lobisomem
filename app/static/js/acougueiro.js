@@ -13,5 +13,4 @@ document.addEventListener("DOMContentLoaded", function () {
         divMensagem.style.display = "block";
         console.log(divMensagem)
     });
-
 });
