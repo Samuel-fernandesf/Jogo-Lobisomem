@@ -1,19 +1,23 @@
 @import url('https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap');
 
 body {
-    height: 100%;
-    margin: 0;
-    font-family: "MedievalSharp", serif;
-    font-weight: 400;
-    font-style: normal;
-    color: white;
-    background-color: #1a1a1a; 
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    overflow: hidden;
-    min-height: 100vh; 
+  height: auto; /* Permite que o conteúdo defina a altura */
+  min-height: 100vh; /* Garante que pelo menos ocupe a tela inteira */
+  margin: 0;
+  font-family: "MedievalSharp", serif;
+  font-weight: 400;
+  font-style: normal;
+  color: white;
+  background-color: #1a1a1a;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background-image: url('img/backgroundgeral.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
 }
+
 
 .body-b {
     font-family: "MedievalSharp", serif;
@@ -36,14 +40,15 @@ body {
     color: #f0f0f0; /* Cor de texto mais suave */
 }
 
+/* LUIZ: Isso aqui tava fixo, agora arrumado  */
 .container {
-    text-align: center;
-    width: 60%; 
-    max-width: 800px; 
-    padding: 20px;
-    background-color: rgba(0, 0, 0, 0.8); 
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6); 
-    margin-top: 50px; 
+  text-align: center;
+  width: 60%;
+  max-width: 800px;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.8);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+  margin: 50px auto; /* Auto nos lados e espaçamento no topo/bottom */
 }
 
 h1, p {
@@ -214,4 +219,25 @@ ul {
 /* Classe para virar a carta */
 .flip.flipped .flip-inner {
   transform: rotateY(180deg);
+}
+
+#coroa_branca{
+  height: 250px;
+  width: 500px;
+}
+
+.play{
+  background-color: rgb(0, 0, 0);
+  border-radius: 200px;
+  padding: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border: 2px white solid;
+  margin-top: 5px;
+  font-size: 2rem;
+  color: white;
+}
+.play:hover{
+  background-color: darkred;
+  transition-duration: 0.5s;
 }

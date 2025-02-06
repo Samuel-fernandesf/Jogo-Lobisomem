@@ -20,13 +20,13 @@ def jogo_form():
 
         #Adiciona os dados no banco dados
         jogadores.append({'id': id,
-                          'nome': nome})
+                        'nome': nome})
         id +=1
 
         if 'jogadores' not in session:
             session['jogadores'] = []
 
-        if len(session['jogadores']) < 8:
+        if len(session['jogadores']) < 10:
             session['jogadores'].append(nome)
             session.modified = True
         else:

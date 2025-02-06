@@ -14,7 +14,7 @@
             <div id='entregar-dispositivo'>
                 <h1>Entregue o dispositivo para o(a) <span class='nome_player'>{{ jogador_atual }}</span></h1>
                 <form method='POST'>
-                    <button type="button" id="revelar-papel">Realizar ação</button>
+                    <button type="button" id="revelar-papel" class='play'>Realizar ação</button>
                 </form>
             </div>
 
@@ -78,7 +78,7 @@
             <div id='botoes' style='display: none'>
                 {% if papel_atual == 'Campones' %}
                 <form method="POST">
-                    <button type="submit" name="pular" value="true">Pular Rodada</button>
+                    <button type="submit" name="pular" value="true" class='play'>Pular Rodada</button>
                 </form>
                 {% else %}
                 <!-- Ações normais dos outros papéis -->
@@ -94,12 +94,12 @@
                     <br>
             
                         {% if papel_atual in ['Vampiro', 'Condessa', 'Caçador'] %}
-                            <button type="submit" name="acao" value="matar">Matar</button>
+                            <button type="submit" name="acao" value="matar" class='play'>Matar</button>
                         {% endif %}
             
                     {% if papel_atual == 'Açougueiro' %}
-                        <button type="submit" name="acao" value="inspecionar" class="btn_inspecionar">Inspecionar</button>
-                        <button class="botao_proximo_acougueiro">Proximo</button>
+                        <button type="submit" name="acao" value="inspecionar" class="play">Inspecionar</button>
+                        <button class="play">Proximo</button>
                     {% endif %}
                 </form>
                 {% endif %}
