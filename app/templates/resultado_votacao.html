@@ -8,10 +8,11 @@
     <title>Resultado da Votação</title>
 </head>
 <body class='body-b'>
+    <img id='coroa_branca' src="{{url_for('static', filename='img/coroabranca.png')}}" >
     <div class="container">
         <h1>Resultado da Votação</h1>
         <h2>{{ eliminado }} foi eliminado!</h2>
-        <p>O papel de {{ eliminado }} era: {{ papel }}</p>
+        <h4>O papel de {{ eliminado }} era: {{ papel }}</h4>
 
         <h3>Jogadores Vivos:</h3>
         <ul>
@@ -21,7 +22,7 @@
         </ul>
 
         <form method="POST" action="{{ url_for('jogo.iniciar_acoes') }}">
-            <button type="submit" class='play'>Iniciar Próxima Fase</button>
+            <button type="submit" class='play mt-3'>Iniciar Próxima Fase</button>
         </form>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
