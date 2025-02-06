@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from flask import Blueprint, render_template, session
 
 home = Blueprint('home', __name__)
