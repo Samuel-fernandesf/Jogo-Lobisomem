@@ -2,25 +2,28 @@ from flask import Blueprint, render_template, redirect, url_for, session, reques
 import random
 
 jogo = Blueprint('jogo', __name__)
+
 @jogo.route('/iniciar', methods=['POST', 'GET'])
 def iniciar_jogo():
-    if 'jogadores' in session and 4 <= len(session['jogadores']) <= 8:
+    if 'jogadores' in session and 4 <= len(session['jogadores']) <= 10:
         num_jogadores = len(session['jogadores'])
-        papeis = ['Condessa']  # Condessa obrigatória
+        papeis = ['Condessa']
         papeis.append('Vampiro')
         papeis += ['Açougueiro', 'Caçador']
-        papeis += ['Campones'] * (num_jogadores - len(papeis))
+        papeis += ['Campones'] * (num_jogadores - len(papeis)) # Ele preenche o que sobrou dos jogadores com Camponeses.
         random.shuffle(papeis)
         session['papeis_jogadores'] = {
             jogador: {'papel': papeis[i], 'vivo': True, 'marcado_para_morrer': False}
             for i, jogador in enumerate(session['jogadores'])
-        }
+        } # compreensao de dicionario, ele associa um papel da lista embaralhada para cada jogador da session.
+        
         # Criar uma lista de Vampiros e Condessa
         session['vampiros'] = [
             jogador for jogador, info in session['papeis_jogadores'].items()
             if info['papel'] in ['Vampiro', 'Condessa']
         ]
         session.modified = True
+        
         return redirect(url_for('jogo.mostrar_papel', indice=0))
     return redirect(url_for('form.jogo_form'))
 
@@ -28,30 +31,34 @@ def iniciar_jogo():
 def mostrar_papel(indice):
     jogadores = session.get('jogadores', [])
     papeis = session.get('papeis_jogadores', {})
-    vampiros = session.get('vampiros', []) 
+    vampiros = session.get('vampiros', [])
+    
     if indice >= len(jogadores):
         return redirect(url_for('jogo.iniciar_acoes'))  # Após o último jogador, inicia ações
+    
     jogador_atual = jogadores[indice]
     papel = papeis[jogador_atual]['papel']
-    # Se for Vampiro ou Condessa, mostrar aliados
     aliados = None
+    
     if papel in ['Vampiro', 'Condessa']:
         aliados = [j for j in vampiros if j != jogador_atual]  # Exclui ele mesmo
+        
     if request.method == 'POST':
         return redirect(url_for('jogo.mostrar_papel', indice=indice + 1))
+    
     return render_template(
         'mostrar_papel.html',
         jogador=jogador_atual,
         papel=papel,
-        aliados=aliados  # Passa a lista de aliados para o template
+        aliados=aliados
     )
     
 @jogo.route('/iniciar_acoes', methods=['GET', 'POST'])
 def iniciar_acoes():
-
     for jogador in session['jogadores']:
         if session['papeis_jogadores'][jogador]['papel'] == 'Açougueiro':
-            session.pop(f'{jogador}_inspecionou', None)
+            session.pop(f'{jogador}_inspecionou', None) # limpa a chave de inspeção.
+            
     if 'papeis_jogadores' in session:
         vivos_com_acao = [
             jogador for jogador, info in session['papeis_jogadores'].items()
@@ -62,10 +69,10 @@ def iniciar_acoes():
         session.modified = True
         return redirect(url_for('jogo.realizar_acao'))
     return redirect(url_for('form.jogo_form'))
-@jogo.route('/realizar_acao', methods=['GET', 'POST'])
 
+@jogo.route('/realizar_acao', methods=['GET', 'POST'])
 def realizar_acao():
-    print('a1')
+    session['acoes'] = []
     if 'fila_acoes' not in session:
         return redirect(url_for('form.jogo_form'))
     
@@ -76,16 +83,16 @@ def realizar_acao():
     jogador_atual_idx = session['jogador_atual']
     
     if jogador_atual_idx >= len(fila_acoes):
-        return redirect(url_for('jogo.finalizar_fase'))
+        return redirect(url_for('jogo.finalizar_fase')) # verifica se todos os jogadores ja realizaram as ações.
     
     jogador_atual = fila_acoes[jogador_atual_idx]
     papel_atual = session['papeis_jogadores'][jogador_atual]['papel']
     jogadores_vivos = [j for j in session['jogadores'] if session['papeis_jogadores'][j]['vivo']]
-    mensagem_inspecao = session.pop('mensagem_inspecao', None)
+    mensagem_inspecao = session.pop('mensagem_inspecao', None) # garante que a mensagem de inspeção apareça apenas uma vez.
     
     if papel_atual == 'Campones' and request.method == 'POST':
         if 'pular' in request.form:
-            session['jogador_atual'] += 1
+            session['jogador_atual'] += 1 # ele pula a rodada na vez do campones.
             session.modified = True
             return redirect(url_for('jogo.realizar_acao'))
         
@@ -98,12 +105,11 @@ def realizar_acao():
             session['papeis_jogadores'][jogador_atual].setdefault('matou', True)
             
         elif acao == 'inspecionar' and alvo and papel_atual == 'Açougueiro':
-            
             if session.get(f'{jogador_atual}_inspecionou', False):
                 mensagem_inspecao = "Você já fez uma inspeção nesta rodada."
             else:
                 alvo_info = session['papeis_jogadores'][alvo]
-                if alvo_info['papel'] in ['Vampiro', 'Condessa', 'Caçador'] and alvo_info.get('matou', False):
+                if alvo_info['papel'] in ['Vampiro', 'Condessa', 'Caçador'] and alvo_info.get('matou', False): # verifica se o alvo matou alguem.
                     mensagem_inspecao = f"{alvo} cheira a sangue!"
                 else:
                     mensagem_inspecao = f"{alvo} não cheira a sangue."
@@ -136,10 +142,11 @@ def finalizar_fase():
     papeis = session.get('papeis_jogadores', {})
     mortos = []
     
+    # mostra os jogadores mortos
     for jogador, info in papeis.items():
         if info['marcado_para_morrer']:
             info['vivo'] = False
-            mortos.append(jogador)
+            mortos.append(jogador) 
             info['marcado_para_morrer'] = False
     
     vivos = [jogador for jogador, info in papeis.items() if info['vivo']]
@@ -148,15 +155,18 @@ def finalizar_fase():
         if session['papeis_jogadores'][jogador]['papel'] == 'Açougueiro':
             session.pop(f'{jogador}_inspecionou', None)
     
-    matadores = sum(1 for jogador in vivos if papeis[jogador]['papel'] in ['Vampiro', 'Condessa'])
-    camponeses = sum(1 for jogador in vivos if papeis[jogador]['papel'] in ['Campones', 'Açougueiro', 'Caçador'])
+    # faz a soma dos montros e aldeoes.
+    monstros = sum(1 for jogador in vivos if papeis[jogador]['papel'] in ['Vampiro', 'Condessa'])
+    aldeoes = sum(1 for jogador in vivos if papeis[jogador]['papel'] in ['Campones', 'Açougueiro', 'Caçador'])
 
+    # quando restarem 2 jogadores, verifica qual grupo ganhou:
     if len(vivos) <= 2:
         ultimo_jogador = vivos[0]
         if papeis[ultimo_jogador]['papel'] in ['Campones', 'Açougueiro', 'Caçador']:
             return redirect(url_for('jogo.fim_jogo', vitoria='aldeoes'))
         else:
             return redirect(url_for('jogo.fim_jogo', vitoria='monstros'))
+        
 
     if 'fase_acao' not in session or session['fase_acao'] is False:
         session['fase_acao'] = True
@@ -189,19 +199,28 @@ def votacao():
     jogadores_vivos = [j for j in session['jogadores'] if session['papeis_jogadores'][j]['vivo']]
     jogadores_mortos = [j for j in session['jogadores'] if not session['papeis_jogadores'][j]['vivo']]
     
+    # verifica se todos o jogadores vivos ja votaram.
     if jogador_votando_idx >= len(jogadores_vivos):
         vivos_votantes = {jogador: votos for jogador, votos in session['votos'].items() if session['papeis_jogadores'][jogador]['vivo']}
+        
         if not vivos_votantes:
             return redirect(url_for('jogo.fim_jogo', vitoria='empate'))
-        if len(vivos_votantes) == 2 or len(vivos_votantes) < 2:
+        
+        # se sobrar ao menos 2 jogadores, o jogo verifica quem ganhou.
+        if len(vivos_votantes) <= 2:
             jogadores_restantes = list(vivos_votantes.keys())
             papeis_restantes = [session['papeis_jogadores'][jogador]['papel'] for jogador in jogadores_restantes]
+            
             if all(papel in ['Campones', 'Açougueiro', 'Caçador'] for papel in papeis_restantes):
                 return redirect(url_for('jogo.fim_jogo', vitoria='aldeoes'))
+            
             if any(papel in ['Vampiro', 'Condessa'] for papel in papeis_restantes):
                 return redirect(url_for('jogo.fim_jogo', vitoria='monstros'))
+            
+        # verifica quem recebeu o maior numero de votos.
         max_votos = max(vivos_votantes.values())
         jogadores_com_max_votos = [j for j, v in vivos_votantes.items() if v == max_votos]
+        
         if len(jogadores_com_max_votos) > 1:
             return render_template(
                 'resultado_votacao.html',
@@ -209,6 +228,7 @@ def votacao():
                 mensagem="A votação empatou! Ninguém foi eliminado.",
                 vivos=jogadores_vivos,
             )
+            
         eliminado = jogadores_com_max_votos[0]
         session['papeis_jogadores'][eliminado]['vivo'] = False
         session.modified = True
