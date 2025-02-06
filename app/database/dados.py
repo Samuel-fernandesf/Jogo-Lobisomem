@@ -1,9 +1,0 @@
-<<<<<<< HEAD
-jogadores = [
-    
-]
-=======
-jogadores = [
-    
-]
->>>>>>> styles

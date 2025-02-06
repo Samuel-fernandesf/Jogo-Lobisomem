@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-document.getElementById('revelar-papel').addEventListener('click', function() {
-    document.getElementById('papel').style.display = 'block';
-=======
 document.addEventListener("DOMContentLoaded", function () {
     let container = document.getElementsByClassName('container')
     let botaoRevelar = document.getElementById("revelar-papel");
@@ -16,5 +12,5 @@ document.addEventListener("DOMContentLoaded", function () {
         divBotao.style.display = "block";
 
     });
->>>>>>> styles
+
 });
