@@ -9,11 +9,11 @@ Yagor Vitor,
 Luiz Leli
 
 Criativo e estilo:
-Yuri Fernandes dos Santos,
+Yuri dos Santos,
 Marco Gramari
 
 Programação e Git:
-Samuel Fernandes Filho
+Samuel Fernandes
 
 Integrantes
 
@@ -23,12 +23,12 @@ Sarah,
 Luana,
 Victor,
 Sophia,
-Maria,
+Maria
 
 Programação:
 Nalany,
 Manuela,
-Miguel,
+Miguel
 
 
 Tutorial
@@ -38,12 +38,12 @@ em mitologia e papeis históricos. Tem como temática
 a luta entre o povo e as criaturas infiltradas.
 
 No jogo os jogadores são divididos em duas equipes:
-os moradores do reino e as criaturas, os moradores
+os moradores do vilarejo e as criaturas, os moradores
 tentam descobrir quem são as criaturas infiltradas e
 tentam eliminá-las sem serem descobertos.
 
 O jogo se alterna entre o dia e a noite. Durante o
-noite as criaturas escolhem um morador do reino
+noite as criaturas escolhem moradores do vilarejo
 para matar. Durante o dia, os jogadores votam em
 um jogador que suspeitam ser a criatura.
 

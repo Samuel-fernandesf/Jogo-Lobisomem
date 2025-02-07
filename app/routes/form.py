@@ -1,5 +1,4 @@
 from flask import Blueprint, render_template, redirect, url_for, request, session, flash
-from database.dados import jogadores
 
 form = Blueprint('form', __name__)
 
@@ -18,10 +17,6 @@ def jogo_form():
             flash("Nome já está em uso. Escolha outro.", category="danger")
             return redirect(url_for('form.jogo_form'))
 
-        #Adiciona os dados no banco dados
-        jogadores.append({'id': id,
-                        'nome': nome})
-        id +=1
 
         if 'jogadores' not in session:
             session['jogadores'] = []

@@ -5,6 +5,7 @@ jogo = Blueprint('jogo', __name__)
 
 @jogo.route('/iniciar', methods=['POST', 'GET'])
 def iniciar_jogo():
+
     if 'jogadores' in session and 6 <= len(session['jogadores']) <= 10:
         num_jogadores = len(session['jogadores'])
         papeis = ['Condessa']
@@ -183,11 +184,7 @@ def finalizar_fase():
 
 @jogo.route('/fim_jogo/<vitoria>')
 def fim_jogo(vitoria):
-    session.pop('papeis_jogadores', None)
-    session.pop('fila_acoes', None)
-    session.pop('jogador_atual', None)
-    session.pop('jogador_votando', None)
-    session.pop('votos', None)
+    session.clear()
     return render_template('fim_jogo.html', vitoria=vitoria)
 
 @jogo.route('/votacao', methods=['GET', 'POST'])
