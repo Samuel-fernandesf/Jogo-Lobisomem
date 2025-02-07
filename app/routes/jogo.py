@@ -66,7 +66,8 @@ def iniciar_acoes():
             if info['vivo'] and info['papel'] in ['Condessa', 'Vampiro', 'Açougueiro', 'Caçador', 'Campones']
         ]
         session['fila_acoes'] = vivos_com_acao
-        session['acoes'] = []
+        session['fase_acao'] = True
+        session['jogador_atual'] = 0  # Reinicia o jogador atual para a nova fase de ações
         session.modified = True
         return redirect(url_for('jogo.realizar_acao'))
     return redirect(url_for('form.jogo_form'))
@@ -79,27 +80,31 @@ def realizar_acao():
     
     if 'jogador_atual' not in session:
         session['jogador_atual'] = 0
-        
-        
+
     fila_acoes = session['fila_acoes']
     jogador_atual_idx = session['jogador_atual']
-    
-    print(len(session['fila_acoes']))
-    print(session['jogador_atual'])
-    
-    #LUIZ: O PROBLEMA PODE ESTAR AQUI
+
+    # Enquanto o jogador na posição atual não estiver vivo, incremente o índice
+    while jogador_atual_idx < len(fila_acoes) and not session['papeis_jogadores'][fila_acoes[jogador_atual_idx]]['vivo']:
+        jogador_atual_idx += 1
+        session['jogador_atual'] = jogador_atual_idx
+        session.modified = True
+
+    # Se não houver mais jogadores vivos na fila de ação, finaliza a fase
     if jogador_atual_idx >= len(fila_acoes):
-        print(f'{fila_acoes},{fila_acoes}')
-        return redirect(url_for('jogo.finalizar_fase')) # verifica se todos os jogadores ja realizaram as ações.
+        print(f'{fila_acoes}, {fila_acoes}')
+        return redirect(url_for('jogo.finalizar_fase'))
     
+    # Agora, garantimos que o jogador atual esteja vivo
     jogador_atual = fila_acoes[jogador_atual_idx]
     papel_atual = session['papeis_jogadores'][jogador_atual]['papel']
     jogadores_vivos = [j for j in session['jogadores'] if session['papeis_jogadores'][j]['vivo']]
-    mensagem_inspecao = session.pop('mensagem_inspecao', None) # garante que a mensagem de inspeção apareça apenas uma vez.
-    
+    mensagem_inspecao = session.pop('mensagem_inspecao', None)  # garante que a mensagem de inspeção apareça apenas uma vez.
+
+    # Resto da lógica...
     if papel_atual == 'Campones' and request.method == 'POST':
         if 'pular' in request.form:
-            session['jogador_atual'] += 1 # ele pula a rodada na vez do campones.
+            session['jogador_atual'] += 1  # pula a vez do camponês
             session.modified = True
             return redirect(url_for('jogo.realizar_acao'))
         
@@ -116,7 +121,7 @@ def realizar_acao():
                 mensagem_inspecao = "Você já fez uma inspeção nesta rodada."
             else:
                 alvo_info = session['papeis_jogadores'][alvo]
-                if alvo_info['papel'] in ['Vampiro', 'Condessa', 'Caçador'] and alvo_info.get('matou', False): # verifica se o alvo matou alguem.
+                if alvo_info['papel'] in ['Vampiro', 'Condessa', 'Caçador'] and alvo_info.get('matou', False):
                     mensagem_inspecao = f"{alvo} cheira a sangue!"
                 else:
                     mensagem_inspecao = f"{alvo} não cheira a sangue."
@@ -146,36 +151,28 @@ def realizar_acao():
 
 @jogo.route('/finalizar_fase')
 def finalizar_fase():
-    
     jogadores = session.get('jogadores', [])
     papeis = session.get('papeis_jogadores', {})
     mortos = []
     
-    # mostra os jogadores mortos
+    # Atualiza os jogadores marcados para morrer
     for jogador, info in papeis.items():
-        if info['marcado_para_morrer']:
+        if info.get('marcado_para_morrer'):
             info['vivo'] = False
-            mortos.append(jogador) 
+            mortos.append(jogador)
             info['marcado_para_morrer'] = False
     
-    vivos = [jogador for jogador, info in papeis.items() if info['vivo']]
+    vivos = [j for j, info in papeis.items() if info['vivo']]
 
+    # Limpa a chave de inspeção para o Açougueiro
     for jogador in vivos:
-        if session['papeis_jogadores'][jogador]['papel'] == 'Açougueiro':
+        if papeis[jogador]['papel'] == 'Açougueiro':
             session.pop(f'{jogador}_inspecionou', None)
-    
-    # faz a soma dos montros e aldeoes.
-    monstros = sum(1 for jogador in vivos if papeis[jogador]['papel'] in ['Vampiro', 'Condessa'])
-    aldeoes = sum(1 for jogador in vivos if papeis[jogador]['papel'] in ['Campones', 'Açougueiro', 'Caçador'])
-    
-    
 
-    if 'fase_acao' not in session or session['fase_acao'] is False:
-        session['fase_acao'] = True
-        session['jogador_atual'] = 0
-        return redirect(url_for('jogo.iniciar_acoes'))
-
+    # Define que a fase de ação acabou
     session['fase_acao'] = False
+    
+    # Configura os dados para a votação
     session['jogador_votando'] = 0
     session['votos'] = {jogador: 0 for jogador in vivos}
     session.modified = True
@@ -205,7 +202,7 @@ def votacao():
             return redirect(url_for('jogo.fim_jogo', vitoria='empate'))
         
         # se sobrar ao menos 2 jogadores, o jogo verifica quem ganhou.
-        if len(vivos_votantes) <= 2:
+        if len(vivos_votantes) <= 3:
             jogadores_restantes = list(vivos_votantes.keys())
             papeis_restantes = [session['papeis_jogadores'][jogador]['papel'] for jogador in jogadores_restantes]
             
