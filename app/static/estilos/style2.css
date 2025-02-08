@@ -145,10 +145,8 @@ ul {
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
 }
 
-.cacador { 
-    color: #007700; 
-    font-weight: bold;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+.caçador { 
+    background: url("img/caçador.png")
 }
 
 .acougueiro { 

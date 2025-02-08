@@ -172,12 +172,17 @@ def finalizar_fase():
     # Define que a fase de ação acabou
     session['fase_acao'] = False
     
-    # Configura os dados para a votação
-    session['jogador_votando'] = 0
-    session['votos'] = {jogador: 0 for jogador in vivos}
-    session.modified = True
+    monstros = sum(1 for jogador in vivos if papeis[jogador]['papel'] in ['Vampiro', 'Condessa'])
 
-    return redirect(url_for('jogo.votacao'))
+    
+    if monstros == 0:
+        return redirect(url_for('jogo.fim_jogo', vitoria='aldeoes'))
+    else:
+        session['jogador_votando'] = 0
+        session['votos'] = {jogador: 0 for jogador in vivos}
+        session.modified = True
+
+        return redirect(url_for('jogo.votacao'))
 
 @jogo.route('/fim_jogo/<vitoria>')
 def fim_jogo(vitoria):
@@ -190,45 +195,59 @@ def votacao():
         session['jogador_votando'] = 0
         session['votos'] = {jogador: 0 for jogador in session['jogadores'] if session['papeis_jogadores'][jogador]['vivo']}
     
+    # Garantindo que 'votos_pular' esteja na sessão
+    if 'votos_pular' not in session:
+        session['votos_pular'] = 0  
+
     jogador_votando_idx = session['jogador_votando']
     jogadores_vivos = [j for j in session['jogadores'] if session['papeis_jogadores'][j]['vivo']]
     jogadores_mortos = [j for j in session['jogadores'] if not session['papeis_jogadores'][j]['vivo']]
-    
-    # verifica se todos o jogadores vivos ja votaram.
+
+    # verifica se todos os jogadores vivos já votaram.
     if jogador_votando_idx >= len(jogadores_vivos):
         vivos_votantes = {jogador: votos for jogador, votos in session['votos'].items() if session['papeis_jogadores'][jogador]['vivo']}
-        
+
         if not vivos_votantes:
             return redirect(url_for('jogo.fim_jogo', vitoria='empate'))
-        
+
         # se sobrar ao menos 2 jogadores, o jogo verifica quem ganhou.
         if len(vivos_votantes) <= 3:
             jogadores_restantes = list(vivos_votantes.keys())
             papeis_restantes = [session['papeis_jogadores'][jogador]['papel'] for jogador in jogadores_restantes]
-            
+
             if all(papel in ['Campones', 'Açougueiro', 'Caçador'] for papel in papeis_restantes):
                 return redirect(url_for('jogo.fim_jogo', vitoria='aldeoes'))
-            
+
             if any(papel in ['Vampiro', 'Condessa'] for papel in papeis_restantes):
                 return redirect(url_for('jogo.fim_jogo', vitoria='monstros'))
-            
-        # verifica quem recebeu o maior numero de votos.
-        max_votos = max(vivos_votantes.values())
+
+        # verifica quem recebeu o maior número de votos.
+        max_votos = max(vivos_votantes.values(), default=0)
+
+        # Se a opção "pular" teve mais votos que qualquer jogador, ninguém é eliminado
+        if session['votos_pular'] >= max_votos:
+            return render_template(
+                'resultado_votacao.html',
+                eliminado="Ninguém",
+                mensagem="A maioria escolheu não eliminar ninguém nesta rodada.",
+                vivos=jogadores_vivos,
+                mortos=jogadores_mortos
+            )
+
         jogadores_com_max_votos = [j for j, v in vivos_votantes.items() if v == max_votos]
-        
+
         if len(jogadores_com_max_votos) > 1:
             return render_template(
                 'resultado_votacao.html',
-                eliminado="Ninguem",
                 mensagem="A votação empatou! Ninguém foi eliminado.",
                 vivos=jogadores_vivos,
             )
-            
+
         eliminado = jogadores_com_max_votos[0]
         session['papeis_jogadores'][eliminado]['vivo'] = False
         session.modified = True
         jogadores_vivos = [j for j in session['jogadores'] if session['papeis_jogadores'][j]['vivo']]
-        
+
         return render_template(
             'resultado_votacao.html',
             eliminado=eliminado,
@@ -236,17 +255,20 @@ def votacao():
             vivos=jogadores_vivos,
             mortos=jogadores_mortos
         )
-    
+
     jogador_atual = jogadores_vivos[jogador_votando_idx]
-    
+
     if request.method == 'POST':
         voto = request.form.get('voto')
-        if voto:
-            session['votos'][voto] += 1
+        if voto == 'pular':
+            session['votos_pular'] += 1  # Adiciona um voto nulo
+        elif voto:
+            session['votos'][voto] += 1  # Adiciona um voto a um jogador
+
         session['jogador_votando'] += 1
         session.modified = True
         return redirect(url_for('jogo.votacao'))
-    
+
     return render_template(
         'votacao.html', jogador_atual=jogador_atual, vivos=jogadores_vivos, mortos=jogadores_mortos
-)
+    )
