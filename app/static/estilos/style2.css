@@ -205,6 +205,16 @@ ul {
   background-size: cover;
 }
 
+#back-hierofante {
+  background: url("img/medico.jpg") no-repeat center center;
+  background-size: cover;
+}
+
+#back-médico {
+  background: url("img/medico.jpg") no-repeat center center;
+  background-size: cover;
+}
+
 .flip {
   width: 350px;
   height: 500px;

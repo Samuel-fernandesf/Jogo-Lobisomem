@@ -10,14 +10,14 @@
 <body class='body-b'>
     <img id='coroa_branca' src="{{url_for('static', filename='img/coroabranca.png')}}" >
     <div class="container">
-        {% if eliminado %}
-            <h1>Resultado da Votação</h1>
-            <h4>Ninguém foi eliminado, o vilarejo se mantém intacto.</h4>
-        {% else %}
-            <h1>Resultado da Votação</h1>
+        <h1>Resultado da Votação</h1>
+        {% if eliminado == 'Ninguem' %}
             <h2>{{ eliminado }} foi eliminado!</h2>
-            <h4>O papel de {{ eliminado }} era: {{ papel }}</h4>     
-        {% endif %}  
+            <p>{{mensagem}}</p>
+        {% else %}
+            <h2>{{ eliminado }} foi eliminado!</h2>
+            <h4>O papel de {{ eliminado }} era: {{ papel }}</h4>
+        {% endif %}
 
         <h3>Jogadores Vivos:</h3>
         <ul>

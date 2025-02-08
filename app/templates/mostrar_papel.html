@@ -77,6 +77,26 @@
                         </div>
                     </div>
             {% endif %}
+            {% if papel == "Médico" %}
+                    <div class="dudu" id='imagem'>
+                        <div class="flip" >
+                            <div class="flip-inner">
+                                <div class="face front"></div>
+                                <div class="face back" id="back-{{ papel | lower }}"></div>
+                            </div>
+                        </div>
+                    </div>
+            {% endif %}
+            {% if papel == "Hierofante" %}
+                    <div class="dudu" id='imagem'>
+                        <div class="flip" >
+                            <div class="flip-inner">
+                                <div class="face front"></div>
+                                <div class="face back" id="back-{{ papel | lower }}"></div>
+                            </div>
+                        </div>
+                    </div>
+            {% endif %}
         </div>
         
         <form method="POST" class="botao_proximo mt-5" id="botao_proximo" style="display: none;">

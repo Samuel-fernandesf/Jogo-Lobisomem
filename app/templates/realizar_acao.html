@@ -81,27 +81,34 @@
                         <button type="submit" name="pular" value="true" class='play'>Pular Rodada</button>
                     </form>
                 {% else %}
-
-                <form method="POST">
-                    <label for="alvo">Selecione um alvo:</label>
-                    <select name="alvo" required>
-                        {% for jogador in jogadores_vivos %}
-                            {% if jogador != jogador_atual %}
-                                <option value="{{ jogador }}">{{ jogador }}</option>
-                            {% endif %}
-                        {% endfor %}
-                    </select>
-                    <br>
-            
+                    <form method="POST">
+                        <label for="alvo">Selecione um alvo:</label>
+                        <select name="alvo" required>
+                            {% for jogador in jogadores_vivos %}
+                                {% if jogador != jogador_atual %}
+                                    <option value="{{ jogador }}">{{ jogador }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                        <br>
+                
                         {% if papel_atual in ['Vampiro', 'Condessa', 'Caçador'] %}
                             <button type="submit" name="acao" value="matar" class='play mt-3' >Matar</button>
                         {% endif %}
-            
-                    {% if papel_atual == 'Açougueiro' %}
-                        <button type="submit" name="acao" value="inspecionar" class="play">Inspecionar</button>
-                        <button class="play">Proximo</button>
-                    {% endif %}
-                </form>
+
+                        {% if papel_atual in ['Médico'] %}
+                            <button type="submit" name="acao" value="curar" class='play mt-3'>Salvar</button>
+                        {% endif %}
+
+                        {% if papel_atual in ['Hierofante'] %}
+                            <button type="submit" name="acao" value="tentativa" class='play mt-3'>Jogar água benta</button>
+                        {% endif %}
+                
+                        {% if papel_atual == 'Açougueiro' %}
+                            <button type="submit" name="acao" value="inspecionar" class="play">Inspecionar</button>
+                            <button class="play">Proximo</button>
+                        {% endif %}
+                    </form>
                 {% endif %}
             </div>
 
