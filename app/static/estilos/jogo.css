@@ -191,3 +191,29 @@ table {
   border-radius: 200px;
   width: 100%;
 }
+
+
+/* Responsividade para jogo.css */
+@media screen and (max-width: 768px) {
+  input {
+      width: 100%;
+      max-width: 300px;
+  }
+
+  td {
+      min-width: 80px;
+      height: 14px;
+      padding: 2px;
+  }
+
+  .face {
+      width: 300px;
+      height: 500px;
+  }
+
+  #back-condessa, #back-vampiro, #back-açougueiro, #back-campones, #back-caçador {
+      width: 300px;
+      height: 500px;
+      background-size: cover;
+  }
+}

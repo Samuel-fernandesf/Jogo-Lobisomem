@@ -276,3 +276,26 @@ ul {
   background-color: darkred;
   transition-duration: 0.5s;
 }
+
+
+@media screen and (max-width: 768px) {
+  .container, .container-mostrar {
+      width: 90%;
+      max-width: 100%;
+      padding: 15px;
+  }
+
+  h1, p {
+      font-size: 28px;
+  }
+
+  button {
+      font-size: 16px;
+      padding: 8px 16px;
+  }
+
+  .flip {
+      width: 250px;
+      height: 400px;
+  }
+}
