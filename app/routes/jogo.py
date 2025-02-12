@@ -113,7 +113,7 @@ def realizar_acao():
         
         if acao == 'matar' and alvo in jogadores_vivos:
             alvo_info = session['papeis_jogadores'][alvo]
-            if papel_atual == 'Caçador': #Lógica do caçador matar com 50% de chance e matar somente vampiro dentro da equipe dos monstros.
+            if papel_atual == 'Caçador': #Lógica do caçador matar com 50% de chance e matar somente vampiro
                 if(random.randint(1,2) == 2):
                     if(alvo_info['papel'] in ['Vampiro','Hierofante, Campones, Açougueiro']):
                         session['papeis_jogadores'][alvo]['marcado_para_morrer'] = True
@@ -230,7 +230,7 @@ def votacao():
     # Verifica se todos os jogadores vivos já votaram.
     if jogador_votando_idx >= len(jogadores_vivos):
         vivos_votantes = {jogador: votos for jogador, votos in session['votos'].items()
-                        if session['papeis_jogadores'][jogador]['vivo']}
+                          if session['papeis_jogadores'][jogador]['vivo']}
 
         if not vivos_votantes:
             return redirect(url_for('jogo.fim_jogo', vitoria='empate'))
@@ -265,7 +265,7 @@ def votacao():
         session['papeis_jogadores'][eliminado]['vivo'] = False
         session.modified = True
         jogadores_vivos = [j for j in session['jogadores']
-                        if session['papeis_jogadores'][j]['vivo']]
+                           if session['papeis_jogadores'][j]['vivo']]
 
         return render_template(
             'resultado_votacao.html',
@@ -296,3 +296,4 @@ def votacao():
         vivos=jogadores_vivos,
         mortos=jogadores_mortos
     )
+
