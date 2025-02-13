@@ -216,4 +216,9 @@ table {
       height: 500px;
       background-size: cover;
   }
+  
+  body {
+      background-image: none !important;
+      background-color: black;
+  }
 }

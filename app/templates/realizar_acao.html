@@ -6,8 +6,6 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
         <link rel="stylesheet" href="{{ url_for('static', filename='estilos/style2.css') }}">
         <title>Ações Noturnas</title>
-        <style>
-        </style>
     </head>
     <body>
         <div class="container">
@@ -83,39 +81,39 @@
                 {% else %}
                     <form method="POST">
                         <label for="alvo">Selecione um alvo:</label>
-                        <select name="alvo" required>
+                        
+                        <!-- Substituindo o select por ul e li -->
+                        <ul id="lista-alvos">
                             {% for jogador in jogadores_vivos %}
                                 {% if jogador != jogador_atual %}
-                                    <option value="{{ jogador }}">{{ jogador }}</option>
+                                    <li data-value="{{ jogador }}" class="alvo-item">{{ jogador }}</li>
                                 {% endif %}
                             {% endfor %}
-                        </select>
+                        </ul>
+                        
+                        <input type="hidden" name="alvo" id="alvo-escolhido" required>
+                        
                         <br>
-                
-                        {% if papel_atual in ['Vampiro', 'Caçador'] %}
-                            <button type="submit" name="acao" value="matar" class='play mt-3' >Matar</button>
+            
+                        {% if papel_atual in ['Vampiro', 'Condessa', 'Caçador'] %}
+                            <button type="submit" name="acao" value="matar" class='play mt-3'>Matar</button>
                         {% endif %}
-
+            
                         {% if papel_atual in ['Médico'] %}
                             <button type="submit" name="acao" value="curar" class='play mt-3'>Salvar</button>
                         {% endif %}
-
+            
                         {% if papel_atual in ['Hierofante'] %}
                             <button type="submit" name="acao" value="tentativa" class='play mt-3'>Jogar água benta</button>
                         {% endif %}
-
-                        {% if papel_atual in ['Condessa'] %}
-                            <button type="submit" name="acao" value="transformar" class='play mt-3'>Transformar</button>
-                        {% endif %}
-                
+            
                         {% if papel_atual == 'Açougueiro' %}
                             <button type="submit" name="acao" value="inspecionar" class="play">Inspecionar</button>
-                            <button class="play">Proximo</button>
+                            <button class="play">Próximo</button>
                         {% endif %}
                     </form>
                 {% endif %}
             </div>
-
         <script src="{{ url_for('static', filename='js/acougueiro.js') }}"></script>
         <script src="{{ url_for('static', filename='js/script.js') }}"></script>
     </body>

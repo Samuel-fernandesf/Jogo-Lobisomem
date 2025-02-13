@@ -24,3 +24,14 @@ document.getElementById('imagem')?.addEventListener('click', function() {
     if (mensagemAlianca) mensagemAlianca.style.display = 'block';
     if (mensagem3) mensagem3.style.display = 'block';
 });
+
+
+document.querySelectorAll("#lista-alvos li").forEach(item => {
+    item.addEventListener("click", function() {
+        document.getElementById("alvo-escolhido").value = this.getAttribute("data-value");
+        
+        // Remove a seleção de todos os itens antes de marcar o clicado
+        document.querySelectorAll("#lista-alvos li").forEach(li => li.classList.remove("selecionado"));
+        this.classList.add("selecionado");
+    });
+});

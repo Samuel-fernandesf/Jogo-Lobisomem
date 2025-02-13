@@ -210,7 +210,7 @@ def finalizar_fase():
 
 @jogo.route('/fim_jogo/<vitoria>')
 def fim_jogo(vitoria):
-    session.clear()
+    session.pop('fila_acoes')
     return render_template('fim_jogo.html', vitoria=vitoria)
 
 @jogo.route('/votacao', methods=['GET', 'POST'])

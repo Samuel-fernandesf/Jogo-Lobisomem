@@ -272,6 +272,24 @@ ul {
   font-size: 2rem;
   color: white;
 }
+
+.botao-jogador{
+  background-color: rgb(0, 0, 0);
+  border-radius: 200px;
+  padding: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border: 2px white solid;
+  margin-top: 5px;
+  font-size: 2rem;
+  color: white;
+}
+
+.botao-jogador:hover{
+  background-color: darkred;
+  transition-duration: 0.5s;
+}
+
 .play:hover{
   background-color: darkred;
   transition-duration: 0.5s;
@@ -298,4 +316,29 @@ ul {
       width: 250px;
       height: 400px;
   }
+}
+
+
+#lista-alvos {
+  list-style: none;
+  padding: 0;
+}
+.alvo-item {
+  background-color: rgb(0, 0, 0);
+  border-radius: 200px;
+  padding: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border: 2px white solid;
+  margin-top: 5px;
+  font-size: 2rem;
+  color: white;
+  display: inline-block;
+}
+.alvo-item:hover {
+  background-color: rgb(138, 5, 5);
+}
+.selecionado {
+  background-color: red;
+  color: white;
 }
