@@ -46,6 +46,6 @@ flask run
 ```
 
 ## Mais conteúdo
-Wiki Oficial - [Pagina Inicial](https://github.com/Samuel-fernandesf/Jogo-Lobisomem/wiki/P%C3%A1gina-Inicial)
-
+Wiki Oficial - [Pagina Inicial](https://github.com/Samuel-fernandesf/Jogo-Lobisomem/wiki/A-Condessa-%E2%80%90-Wiki-Oficial)
 Equipe de desenvolvimento - [Integrantes](https://github.com/Samuel-fernandesf/Jogo-Lobisomem/wiki/Equipe)
+Patch Notes - [Patch-Notes](https://github.com/Samuel-fernandesf/Jogo-Lobisomem/wiki/Patch-Notes)
