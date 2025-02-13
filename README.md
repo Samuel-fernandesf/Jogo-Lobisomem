@@ -26,7 +26,7 @@ No jogo os jogadores são divididos em duas equipes: os moradores do vilarejo e 
 
 O jogo se alterna entre o dia e a noite. Durante o noite as criaturas escolhem moradores do vilarejo para matar. Durante o dia, os jogadores votam em um jogador que suspeitam ser a criatura.
 
-### Linguagens usadas
+### Tecnologias
 <p display="inline-block">
   <img width="48" src='https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/1200px-Python-logo-notext.svg.png'>
   <img width="48" src="https://upload.wikimedia.org/wikipedia/commons/6/6a/JavaScript-logo.png" alt="blazor-logo"/>
@@ -46,6 +46,6 @@ flask run
 ```
 
 ## Mais conteúdo
-Wiki Oficial - [Pagina Inicial](https://github.com/Samuel-fernandesf/Jogo-Lobisomem/wiki/A-Condessa-%E2%80%90-Wiki-Oficial)
-Equipe de desenvolvimento - [Integrantes](https://github.com/Samuel-fernandesf/Jogo-Lobisomem/wiki/Equipe)
+Wiki Oficial - [Pagina Inicial](https://github.com/Samuel-fernandesf/Jogo-Lobisomem/wiki/A-Condessa-%E2%80%90-Wiki-Oficial)<br>
+Equipe de desenvolvimento - [Integrantes](https://github.com/Samuel-fernandesf/Jogo-Lobisomem/wiki/Equipe)<br>
 Patch Notes - [Patch-Notes](https://github.com/Samuel-fernandesf/Jogo-Lobisomem/wiki/Patch-Notes)
